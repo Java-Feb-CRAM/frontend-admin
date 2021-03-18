@@ -7,13 +7,17 @@ import { IndexComponent } from './index/index.component';
 import { FlightListComponent } from './flight-list/flight-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
     FlightListComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
