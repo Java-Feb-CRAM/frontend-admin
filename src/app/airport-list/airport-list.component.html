@@ -1,0 +1,18 @@
+<h1>Airports</h1>
+<a [routerLink]="['/']">Back</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">IATA ID</th>
+      <th scope="col">City</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let airport of airports">
+      <th scope="row">{{ airport.iataId }}</th>
+      <td>
+        {{ airport.city }}
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FooterComponent } from './footer.component';
+import { AirplaneTypeListComponent } from './airplane-type-list.component';
 
-describe('FooterComponent', () => {
-  let component: FooterComponent;
-  let fixture: ComponentFixture<FooterComponent>;
+describe('AirplaneTypeListComponent', () => {
+  let component: AirplaneTypeListComponent;
+  let fixture: ComponentFixture<AirplaneTypeListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FooterComponent],
+      declarations: [AirplaneTypeListComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FooterComponent);
+    fixture = TestBed.createComponent(AirplaneTypeListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

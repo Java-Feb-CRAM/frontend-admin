@@ -10,6 +10,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AirportListComponent } from './airport-list/airport-list.component';
+import { AirplaneListComponent } from './airplane-list/airplane-list.component';
+import { AirplaneTypeListComponent } from './airplane-type-list/airplane-type-list.component';
+import { RouteListComponent } from './route-list/route-list.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +23,10 @@ import { HttpClientModule } from '@angular/common/http';
     PageNotFoundComponent,
     HeaderComponent,
     FooterComponent,
+    AirportListComponent,
+    AirplaneListComponent,
+    AirplaneTypeListComponent,
+    RouteListComponent,
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, NgbModule],
   providers: [],

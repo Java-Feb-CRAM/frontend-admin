@@ -1,0 +1,18 @@
+<h1>Airplanes</h1>
+<a [routerLink]="['/']">Back</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Type ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let airplane of airplanes">
+      <th scope="row">{{ airplane.id }}</th>
+      <td>
+        {{ airplane.airplaneType.id }}
+      </td>
+    </tr>
+  </tbody>
+</table>

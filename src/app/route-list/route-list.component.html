@@ -1,0 +1,22 @@
+<h1>Routes</h1>
+<a [routerLink]="['/']">Back</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Origin Airport</th>
+      <th scope="col">Destination Airport</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let route of routes">
+      <th scope="row">{{ route.id }}</th>
+      <td>
+        {{ route.originAirport.iataId }}
+      </td>
+      <td>
+        {{ route.destinationAirport.iataId }}
+      </td>
+    </tr>
+  </tbody>
+</table>
