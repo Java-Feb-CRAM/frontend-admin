@@ -1,0 +1,160 @@
+<div class="modal-header">
+  <h4 class="modal-title">New Flight</h4>
+  <button
+    type="button"
+    class="close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form (ngSubmit)="onSubmit()" #flightForm="ngForm">
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="route">Route</label>
+      <select
+        class="form-control ng-untouched ng-pristine ng-valid"
+        id="route"
+        required
+        [(ngModel)]="model.routeId"
+        name="route"
+        #route="ngModel"
+      >
+        <option value="-1" [ngValue]="undefined">Select a Route</option>
+        <option *ngFor="let route of routes" [value]="route.id">
+          {{ route.originAirport.iataId }} &rarr;
+          {{ route.destinationAirport.iataId }}
+        </option>
+      </select>
+      <div [hidden]="route.valid || route.pristine" class="alert alert-danger">
+        <div *ngIf="route.errors">
+          <div *ngIf="route.errors.required">Route is required.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="airplane">Airplane</label>
+      <select
+        class="form-control ng-untouched ng-pristine ng-valid"
+        id="airplane"
+        required
+        [(ngModel)]="model.airplaneId"
+        name="airplane"
+        #airplane="ngModel"
+      >
+        <option value="-1" [ngValue]="undefined">Select an Airplane</option>
+        <option *ngFor="let airplane of airplanes" [value]="airplane.id">
+          {{ airplane.id }}
+        </option>
+      </select>
+      <div
+        [hidden]="airplane.valid || airplane.pristine"
+        class="alert alert-danger"
+      >
+        <div *ngIf="airplane.errors">
+          <div *ngIf="airplane.errors.required">Airplane is required.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="departureTime">Departure Time</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <i class="bi bi-calendar"></i>
+          </div>
+        </div>
+        <input
+          class="form-control ng-untouched ng-pristine ng-valid"
+          id="departureTime"
+          required
+          name="departureTime"
+          #departureTime="ngModel"
+          [(ngModel)]="model.departureTime"
+          [owlDateTimeTrigger]="dtPicker1"
+          [owlDateTime]="dtPicker1"
+        />
+      </div>
+      <owl-date-time [hour12Timer]="true" #dtPicker1></owl-date-time>
+      <div
+        [hidden]="departureTime.valid || departureTime.pristine"
+        class="alert alert-danger"
+      >
+        <div *ngIf="departureTime.errors">
+          <div *ngIf="departureTime.errors.required">
+            Departure time is required.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="reservedSeats">Reserved Seats</label>
+      <input
+        type="number"
+        class="form-control ng-untouched ng-pristine ng-valid"
+        id="reservedSeats"
+        min="0"
+        required
+        [(ngModel)]="model.reservedSeats"
+        name="reservedSeats"
+        #reservedSeats="ngModel"
+      />
+      <div
+        [hidden]="reservedSeats.valid || reservedSeats.pristine"
+        class="alert alert-danger"
+      >
+        <div *ngIf="reservedSeats.errors">
+          <div *ngIf="reservedSeats.errors.required">
+            Reserved seats is required.
+          </div>
+          <div *ngIf="reservedSeats.errors.min">
+            Reserved seats must be 0 or greater.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="seatPrice">Seat Price</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text">$</div>
+        </div>
+        <input
+          type="number"
+          step=".01"
+          min="0"
+          class="form-control ng-untouched ng-pristine ng-valid"
+          id="seatPrice"
+          required
+          [(ngModel)]="model.seatPrice"
+          name="seatPrice"
+          #seatPrice="ngModel"
+        />
+      </div>
+
+      <div
+        [hidden]="seatPrice.valid || seatPrice.pristine"
+        class="alert alert-danger"
+      >
+        <div *ngIf="seatPrice.errors">
+          <div *ngIf="seatPrice.errors.required">Seat price is required.</div>
+          <div *ngIf="seatPrice.errors.min">
+            Seat price must be 0 or greater.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-success"
+      [disabled]="!flightForm.form.valid"
+    >
+      New Flight
+    </button>
+  </div>
+</form>

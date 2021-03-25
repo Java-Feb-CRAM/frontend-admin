@@ -1,0 +1,23 @@
+<form [formGroup]="flightForm" (ngSubmit)="submit()">
+  <app-price-form
+    label="Seat Price"
+    formControlName="seatPrice"
+  ></app-price-form>
+  <app-positive-integer-form
+    label="Reserved Seats"
+    formControlName="reservedSeats"
+  ></app-positive-integer-form>
+  <app-date-time-form
+    label="Departure Time"
+    formControlName="departureTime"
+  ></app-date-time-form>
+  <app-entity-selection-form
+    label="Route"
+    formControlName="route"
+  ></app-entity-selection-form>
+  <app-entity-selection-form
+    label="Airplane"
+    formControlName="airplane"
+  ></app-entity-selection-form>
+  <button>Sign Up</button>
+</form>
