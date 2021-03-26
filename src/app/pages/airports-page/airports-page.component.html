@@ -1,0 +1,6 @@
+<p>airports-page works!</p>
+<app-airport-table
+  [airports]="airports"
+  (airportTableEvent)="handleTableEvent($event)"
+  (addEvent)="showCreateForm($event)"
+></app-airport-table>
