@@ -1,9 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
-@import "~bootstrap/scss/bootstrap";
-@import "~ng-pick-datetime/assets/style/picker.min.css";
-@import "~bootstrap-icons/font/bootstrap-icons.css";
+@import "~@angular/material/theming";
+@import "./styles/typography";
+@import "./app-theme";
+@import "./styles/base";
+@import "./styles/global";
 
-.cdk-global-overlay-wrapper,
-.cdk-overlay-container {
-  z-index: 99999 !important;
+@include mat-core($custom-typography);
+
+$primary: mat-palette($mat-indigo);
+$accent: mat-palette($mat-pink, A200, A100, A400);
+$theme: mat-light-theme($primary, $accent);
+@include angular-material-theme($theme);
+@include custom-components-them($theme);
+
+$alt-primary: mat-palette($mat-yellow);
+$alt-accent: mat-palette($mat-grey, 200);
+$alt-theme: mat-dark-theme($alt-primary, $alt-accent);
+
+.alternative {
+  @include angular-material-theme($alt-theme);
 }

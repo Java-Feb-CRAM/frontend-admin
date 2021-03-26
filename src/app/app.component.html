@@ -1,9 +1,15 @@
-<app-header></app-header>
-<main>
-  <div class="container">
-    <router-outlet></router-outlet>
+<div id="top" fxLayout="column" fxFlexFill>
+  <app-header> </app-header>
+  <div fxFlex class="content">
+    <div class="about-container">
+      <div class="gradient">
+        <div fxLayout="column">
+          <div class="get-started">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</main>
-<div class="footer mt-auto py-3">
   <app-footer></app-footer>
 </div>

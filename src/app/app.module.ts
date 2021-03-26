@@ -3,44 +3,50 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IndexComponent } from './components/index/index.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FlightPlaneModule } from './services/flight-plane.module';
-import {
-  OWL_DATE_TIME_LOCALE,
-  OwlDateTimeModule,
-  OwlNativeDateTimeModule,
-} from 'ng-pick-datetime';
-import {
-  BrowserAnimationsModule,
-  NoopAnimationsModule,
-} from '@angular/platform-browser/animations';
-import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
-import { DataTableComponent } from './components/data-table/data-table.component';
-import { EntitySelectionFormComponent } from './modules/forms/entity-selection-form/entity-selection-form.component';
-import { DateTimeFormComponent } from './modules/forms/date-time-form/date-time-form.component';
-import { PositiveIntegerFormComponent } from './modules/forms/positive-integer-form/positive-integer-form.component';
-import { PriceFormComponent } from './modules/forms/price-form/price-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FlightFormComponent } from './modules/forms/flight-form/flight-form.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IndexPageComponent } from './pages/index-page/index-page.component';
+import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+import { HeaderComponent } from './components/layout/header/header.component';
+import { FooterComponent } from './components/layout/footer/footer.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AirportsPageComponent } from './pages/airports-page/airports-page.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { FlightTableComponent } from './components/flight/flight-table/flight-table.component';
+import { AirportTableComponent } from './components/airport/airport-table/airport-table.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-delete.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AirportFormComponent } from './components/airport/airport-form/airport-form.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { FlightFormComponent } from './components/flight/flight-form/flight-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    IndexComponent,
-    PageNotFoundComponent,
+    IndexPageComponent,
+    NotFoundPageComponent,
     HeaderComponent,
     FooterComponent,
-    ConfirmModalComponent,
-    DataTableComponent,
-    EntitySelectionFormComponent,
-    DateTimeFormComponent,
-    PositiveIntegerFormComponent,
-    PriceFormComponent,
+    AirportsPageComponent,
+    FlightTableComponent,
+    AirportTableComponent,
+    ConfirmDeleteComponent,
+    AirportFormComponent,
     FlightFormComponent,
   ],
   imports: [
@@ -48,18 +54,30 @@ import { FlightFormComponent } from './modules/forms/flight-form/flight-form.com
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    NgbModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
+    NgxMaterialTimepickerModule,
+    FontAwesomeModule,
+    FlexLayoutModule,
+    MatTableModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatListModule,
+    MatIconModule,
+    MatButtonModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTooltipModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    NgxMaterialTimepickerModule,
     ReactiveFormsModule,
   ],
-  providers: [
-    {
-      provide: OWL_DATE_TIME_LOCALE,
-      useValue: 'en-US',
-    },
-  ],
+  providers: [],
   bootstrap: [AppComponent],
-  exports: [DataTableComponent],
+  exports: [],
 })
 export class AppModule {}
