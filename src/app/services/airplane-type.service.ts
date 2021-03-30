@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { AirplaneType } from '../models/AirplaneType';
 import { catchError, map } from 'rxjs/operators';
-import { Airplane } from '../models/Airplane';
 
 @Injectable({
   providedIn: 'root',

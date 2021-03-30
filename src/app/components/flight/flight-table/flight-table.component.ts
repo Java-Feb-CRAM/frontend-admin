@@ -1,20 +1,17 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
-  EventEmitter,
 } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { Airport } from '../../../models/Airport';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { TableEventType } from '../../../interfaces/TableEventType';
 import { Flight } from '../../../models/Flight';
-import Table = WebAssembly.Table;
 
 export interface FlightTableEvent {
   id: number;

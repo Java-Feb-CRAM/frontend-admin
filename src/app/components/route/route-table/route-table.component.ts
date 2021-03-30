@@ -1,19 +1,17 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
-  EventEmitter,
 } from '@angular/core';
 import { TableEventType } from '../../../interfaces/TableEventType';
 import { Route } from '../../../models/Route';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import Table = WebAssembly.Table;
 
 export interface RouteTableEvent {
   id: number;

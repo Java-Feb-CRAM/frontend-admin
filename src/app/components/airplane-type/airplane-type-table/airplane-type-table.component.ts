@@ -1,12 +1,11 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
-  EventEmitter,
-  ViewChild,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { TableEventType } from '../../../interfaces/TableEventType';
 import { AirplaneType } from '../../../models/AirplaneType';

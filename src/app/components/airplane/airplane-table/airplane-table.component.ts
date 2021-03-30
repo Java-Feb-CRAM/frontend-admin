@@ -1,19 +1,17 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
-  ViewChild,
-  EventEmitter,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { TableEventType } from '../../../interfaces/TableEventType';
 import { Airplane } from '../../../models/Airplane';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTab } from '@angular/material/tabs';
 
 export interface AirplaneTableEvent {
   id: number;

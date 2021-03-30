@@ -1,15 +1,6 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Airport } from '../../models/Airport';
 import { AirportService } from '../../services/airport.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import {
   AirportTableComponent,
   AirportTableEvent,
@@ -17,7 +8,6 @@ import {
 import { TableEventType } from '../../interfaces/TableEventType';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from '../../components/confirm-delete/confirm-delete.component';
-import { filterStackTrace } from 'protractor/built/util';
 import { AirportFormComponent } from '../../components/airport/airport-form/airport-form.component';
 import { AirportDetailsComponent } from '../../components/airport/airport-details/airport-details.component';
 
