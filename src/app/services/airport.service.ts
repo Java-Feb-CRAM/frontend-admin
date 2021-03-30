@@ -42,6 +42,10 @@ export class AirportService {
     );
   }
 
+  updateAirport(iataId: string, airport: Airport): Observable<{}> {
+    return this.http.put(`${this.airportsUrl}/${iataId}`, airport);
+  }
+
   deleteAirport(iataId: string): Observable<{}> {
     return this.http.delete(`${this.airportsUrl}/${iataId}`);
   }

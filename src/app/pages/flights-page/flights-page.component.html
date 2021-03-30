@@ -1,0 +1,5 @@
+<app-flight-table
+  [flights]="flights"
+  (flightTableEvent)="handleTableEvent($event)"
+  (addEvent)="showCreateForm($event)"
+></app-flight-table>

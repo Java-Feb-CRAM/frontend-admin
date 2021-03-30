@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>
+  {{ updating ? "Update AirplaneType" : "Create AirplaneType" }}
+</h1>
+
+<form [formGroup]="airplaneTypeForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Max Capacity</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="maxCapacity"
+        required
+        min="0"
+      />
+      <mat-error
+        *ngIf="airplaneTypeForm.controls['maxCapacity'].errors?.required"
+      >
+        Max capacity is required
+      </mat-error>
+      <mat-error *ngIf="airplaneTypeForm.controls['maxCapacity'].errors?.min">
+        Max capacity must be 0 or greater
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <span fxFlex></span>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!airplaneTypeForm.valid"
+    >
+      Submit
+    </button>
+  </div>
+</form>

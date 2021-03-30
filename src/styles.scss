@@ -19,3 +19,11 @@ $alt-theme: mat-dark-theme($alt-primary, $alt-accent);
 .alternative {
   @include angular-material-theme($alt-theme);
 }
+
+.timepicker-overlay {
+  z-index: 10000000 !important;
+}
+
+.timepicker-backdrop-overlay {
+  z-index: 10000000 !important;
+}

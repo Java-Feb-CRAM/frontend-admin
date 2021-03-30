@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Airport } from '../../../models/Airport';
@@ -32,7 +32,7 @@ export class AirportFormComponent {
     public dialogRef: MatDialogRef<AirportFormData>,
     @Inject(MAT_DIALOG_DATA) public data: AirportFormData
   ) {
-    if (data.airport) {
+    if (data && data.airport) {
       this.airportForm.patchValue({
         iataId: data.airport.iataId,
         city: data.airport.city,
@@ -43,12 +43,18 @@ export class AirportFormComponent {
   }
 
   onSubmit(): void {
-    const airport = new Airport(
-      this.airportForm.controls.iataId.value,
-      this.airportForm.controls.city.value,
-      [],
-      []
-    );
+    let airport: Airport;
+    if (this.updating && this.data.airport) {
+      airport = this.data.airport;
+      airport.city = this.airportForm.controls.city.value;
+    } else {
+      airport = new Airport(
+        this.airportForm.controls.iataId.value,
+        this.airportForm.controls.city.value,
+        [],
+        []
+      );
+    }
     console.log(airport);
     this.dialogRef.close(airport);
   }
