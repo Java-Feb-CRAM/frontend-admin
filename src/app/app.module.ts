@@ -34,6 +34,21 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FlightFormComponent } from './components/flight/flight-form/flight-form.component';
+import { AirportDetailsComponent } from './components/airport/airport-details/airport-details.component';
+import { AirplaneTypeDetailsComponent } from './components/airplane-type/airplane-type-details/airplane-type-details.component';
+import { AirplaneTypeFormComponent } from './components/airplane-type/airplane-type-form/airplane-type-form.component';
+import { AirplaneTypeTableComponent } from './components/airplane-type/airplane-type-table/airplane-type-table.component';
+import { AirplaneTypesPageComponent } from './pages/airplane-types-page/airplane-types-page.component';
+import { AirplanesPageComponent } from './pages/airplanes-page/airplanes-page.component';
+import { AirplaneDetailsComponent } from './components/airplane/airplane-details/airplane-details.component';
+import { AirplaneFormComponent } from './components/airplane/airplane-form/airplane-form.component';
+import { AirplaneTableComponent } from './components/airplane/airplane-table/airplane-table.component';
+import { RoutesPageComponent } from './pages/routes-page/routes-page.component';
+import { RouteDetailsComponent } from './components/route/route-details/route-details.component';
+import { RouteFormComponent } from './components/route/route-form/route-form.component';
+import { RouteTableComponent } from './components/route/route-table/route-table.component';
+import { FlightDetailsComponent } from './components/flight/flight-details/flight-details.component';
+import { FlightsPageComponent } from './pages/flights-page/flights-page.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +63,21 @@ import { FlightFormComponent } from './components/flight/flight-form/flight-form
     ConfirmDeleteComponent,
     AirportFormComponent,
     FlightFormComponent,
+    AirportDetailsComponent,
+    AirplaneTypeDetailsComponent,
+    AirplaneTypeFormComponent,
+    AirplaneTypeTableComponent,
+    AirplaneTypesPageComponent,
+    AirplanesPageComponent,
+    AirplaneDetailsComponent,
+    AirplaneFormComponent,
+    AirplaneTableComponent,
+    RoutesPageComponent,
+    RouteDetailsComponent,
+    RouteFormComponent,
+    RouteTableComponent,
+    FlightDetailsComponent,
+    FlightsPageComponent,
   ],
   imports: [
     BrowserModule,

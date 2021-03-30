@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>
+  {{ updating ? "Update Airplane" : "Create Airplane" }}
+</h1>
+
+<form [formGroup]="airplaneForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Airplane Type</mat-label>
+      <mat-select formControlName="airplaneType" required>
+        <mat-option value="-1">Select an Airplane Type</mat-option>
+        <mat-option
+          *ngFor="let airplaneType of airplaneTypes"
+          [value]="airplaneType.id"
+        >
+          {{ airplaneType.id }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="airplaneForm.controls['airplaneType'].errors?.required">
+        Airplane Type is required
+      </mat-error>
+      <mat-error *ngIf="airplaneForm.controls['airplaneType'].errors?.min">
+        Airplane Type is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <span fxFlex></span>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!airplaneForm.valid"
+    >
+      Submit
+    </button>
+  </div>
+</form>

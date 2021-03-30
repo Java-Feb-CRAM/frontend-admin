@@ -1,0 +1,64 @@
+<div style="display: block">
+  <mat-form-field appearance="legacy">
+    <mat-label>Filter</mat-label>
+    <input matInput type="text" [(ngModel)]="filterString" (input)="onType()" />
+    <mat-icon matSuffix>filter_alt</mat-icon>
+  </mat-form-field>
+  <span fxFlex></span>
+  <button mat-fab color="primary" (click)="this.addEvent.emit(true)">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+    <td mat-cell *matCellDef="let rowItem">{{ rowItem.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="airplaneType">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Airplane Type</th>
+    <td mat-cell *matCellDef="let rowItem">{{ rowItem.airplaneType.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let rowItem">
+      <span fxFlex></span>
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltip="Show Details"
+        (click)="emitEvent(rowItem.id, TableEventType.DETAILS)"
+      >
+        <mat-icon>format_list_bulleted</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="accent"
+        matTooltip="Edit"
+        (click)="emitEvent(rowItem.id, TableEventType.EDIT)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="warn"
+        matTooltip="Delete"
+        [disabled]="rowItem.noDelete"
+        (click)="emitEvent(rowItem.id, TableEventType.DELETE)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<mat-paginator
+  [pageSizeOptions]="[10, 20]"
+  showFirstLastButtons
+></mat-paginator>

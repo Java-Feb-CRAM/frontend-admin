@@ -19,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from '../../components/confirm-delete/confirm-delete.component';
 import { filterStackTrace } from 'protractor/built/util';
 import { AirportFormComponent } from '../../components/airport/airport-form/airport-form.component';
+import { AirportDetailsComponent } from '../../components/airport/airport-details/airport-details.component';
 
 @Component({
   selector: 'app-airports-page',
@@ -47,6 +48,7 @@ export class AirportsPageComponent implements OnInit {
   handleTableEvent(event: AirportTableEvent): void {
     switch (event.eventType) {
       case TableEventType.DETAILS:
+        this.showDetails(event.iataId);
         break;
       case TableEventType.EDIT:
         this.showUpdateForm(event.iataId);
@@ -54,6 +56,17 @@ export class AirportsPageComponent implements OnInit {
       case TableEventType.DELETE:
         this.deleteAirport(event.iataId);
         break;
+    }
+  }
+
+  showDetails(iataId: string): void {
+    const airport = this.findAirportById(iataId);
+    if (airport) {
+      const detailsDialog = this.dialog.open(AirportDetailsComponent, {
+        data: {
+          airport,
+        },
+      });
     }
   }
 
@@ -66,7 +79,13 @@ export class AirportsPageComponent implements OnInit {
         },
       });
       updateDialog.afterClosed().subscribe((result) => {
-        console.log(result);
+        if (result instanceof Airport) {
+          this.airportService.updateAirport(iataId, result).subscribe(() => {
+            const index = this.airports.findIndex((a) => a.iataId === iataId);
+            this.airports[index] = result;
+            this.table?.update();
+          });
+        }
       });
     }
   }

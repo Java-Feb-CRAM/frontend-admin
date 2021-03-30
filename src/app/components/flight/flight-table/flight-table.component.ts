@@ -3,13 +3,23 @@ import {
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
   ViewChild,
+  EventEmitter,
 } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Airport } from '../../../models/Airport';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { TableEventType } from '../../../interfaces/TableEventType';
+import { Flight } from '../../../models/Flight';
+import Table = WebAssembly.Table;
+
+export interface FlightTableEvent {
+  id: number;
+  eventType: TableEventType;
+}
 
 @Component({
   selector: 'app-flight-table',
@@ -17,13 +27,54 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./flight-table.component.scss'],
 })
 export class FlightTableComponent implements OnChanges {
-  @Input() dataSource = new MatTableDataSource<Airport>();
-  displayedColumns = ['iataId', 'city', 'actions'];
-  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
-  @ViewChild(MatSort) sort: MatSort | null = null;
+  @Input() flights: Flight[] = [];
+  dataSource = new MatTableDataSource<Flight>(this.flights);
+  @Output() flightTableEvent = new EventEmitter<FlightTableEvent>();
+  @Output() addEvent = new EventEmitter<boolean>();
+  displayedColumns = [
+    'id',
+    'route',
+    'airplane',
+    'departureTime',
+    'reservedSeats',
+    'seatPrice',
+    'actions',
+  ];
+  filterString = '';
+  @ViewChild(MatPaginator, { static: false })
+  set paginator(value: MatPaginator) {
+    if (this.dataSource) {
+      this.dataSource.paginator = value;
+    }
+  }
+  @ViewChild(MatSort, { static: false })
+  set sort(value: MatSort) {
+    if (this.dataSource) {
+      this.dataSource.sort = value;
+    }
+  }
+  // @ts-ignore
+  @ViewChild(MatTable) table: MatTable<any>;
+
+  TableEventType = TableEventType;
+
+  onType(): void {
+    this.dataSource.filter = this.filterString;
+  }
+
+  update(): void {
+    this.dataSource.data = this.flights;
+    this.table.renderRows();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.update();
+  }
+
+  emitEvent(id: number, eventType: TableEventType): void {
+    this.flightTableEvent.emit({
+      id,
+      eventType,
+    });
   }
 }
