@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IndexPageComponent } from './pages/index-page/index-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
@@ -38,6 +38,7 @@ import { RegistrationFormComponent } from './components/authentication/registrat
 import { LoginFormComponent } from './components/authentication/login-form/login-form.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,13 @@ import { RegistrationPageComponent } from './pages/registration-page/registratio
     NgxMaterialTimepickerModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
   exports: [],
 })

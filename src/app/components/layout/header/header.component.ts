@@ -7,10 +7,11 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  constructor(private userService: UserService) {
-    this.isLoggedIn$ = this.userService.loggedIn()
+  constructor(private userService: UserService) {}
+
+  get isLoggedIn(): boolean {
+    return this.userService.isLoggedIn;
   }
-  isLoggedIn$ = false;
 
   navigation = [
     { link: 'airplanes', label: 'Airplanes' },
@@ -21,7 +22,10 @@ export class HeaderComponent {
   ];
 
   logout(): void {
-    this.userService.logout()
-    this.isLoggedIn$ = false
+    this.userService.logout();
+  }
+
+  get firstName(): string {
+    return this.userService.user.givenName;
   }
 }

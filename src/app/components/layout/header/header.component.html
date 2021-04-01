@@ -25,19 +25,27 @@
         >{{ item.label }}</a
       >
     </mat-nav-list>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon class="default-menu-icon">person_outline</mat-icon>
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon inline="true" class="default-menu-icon"
+        >person_outline</mat-icon
+      >
+      <span *ngIf="isLoggedIn">{{ firstName }}</span>
     </button>
     <mat-menu #menu="matMenu">
-      <button routerLink="/login" routerLinkActive="active" mat-menu-item [disabled]="isLoggedIn$">
+      <button
+        routerLink="/login"
+        routerLinkActive="active"
+        mat-menu-item
+        [disabled]="isLoggedIn"
+      >
         <mat-icon>fingerprint</mat-icon>
         <span>Login</span>
       </button>
-      <button *ngIf="!isLoggedIn$" mat-menu-item>
+      <button *ngIf="!isLoggedIn" mat-menu-item>
         <mat-icon>cake</mat-icon>
         <span>Signup</span>
       </button>
-      <button (click)="logout()" mat-menu-item [disabled]="!isLoggedIn$">
+      <button (click)="logout()" mat-menu-item [disabled]="!isLoggedIn">
         <mat-icon>lock_open</mat-icon>
         <span style="padding-right: 40px" ngStyle.lt-sm="padding-right: 10px;"
           >Logout</span

@@ -5,15 +5,15 @@ import { CredentialsDto } from 'src/app/models/CredentialsDto';
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss']
+  styleUrls: ['./login-form.component.scss'],
 })
-export class LoginFormComponent{
-  username = "";
-  password = "";
-  
-  constructor(private userService: UserService) { }
-  
+export class LoginFormComponent {
+  username = '';
+  password = '';
+
+  constructor(private userService: UserService) {}
+
   login(): void {
-    this.userService.login(new CredentialsDto(this.username, this.password))
+    this.userService.login(new CredentialsDto(this.username, this.password));
   }
 }
