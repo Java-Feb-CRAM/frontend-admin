@@ -29,7 +29,7 @@
       <mat-icon class="default-menu-icon">person_outline</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item [disabled]="isLoggedIn$">
+      <button routerLink="/login" routerLinkActive="active" mat-menu-item [disabled]="isLoggedIn$">
         <mat-icon>fingerprint</mat-icon>
         <span>Login</span>
       </button>
@@ -37,7 +37,7 @@
         <mat-icon>cake</mat-icon>
         <span>Signup</span>
       </button>
-      <button mat-menu-item [disabled]="!isLoggedIn$">
+      <button (click)="logout()" mat-menu-item [disabled]="!isLoggedIn$">
         <mat-icon>lock_open</mat-icon>
         <span style="padding-right: 40px" ngStyle.lt-sm="padding-right: 10px;"
           >Logout</span
