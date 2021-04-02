@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { CredentialsDto } from '../models/CredentialsDto';
+import { Router, ActivatedRoute } from '@angular/router';
 
 export const JWT_KEY = 'JWT';
 export interface LoginResponse {
@@ -16,7 +16,7 @@ export class UserService {
   loginLogoutChange: Subject<boolean> = new Subject<boolean>();
   user: any = {};
 
-  constructor(private http: HttpClient) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) {
     this.loginLogoutChange.subscribe((value) => {
       this.isLoggedIn = value;
       if (this.isLoggedIn) {
@@ -26,13 +26,14 @@ export class UserService {
     this.loginLogoutChange.next(this.isJWTSet());
   }
 
-  loginUrl = 'http://localhost:8080/users/credentails/authenticate';
+  loginUrl = 'http://localhost:8080/users/credentials/authenticate';
 
   login(credentialsDto: CredentialsDto): void {
     this.http.post<LoginResponse>(this.loginUrl, credentialsDto).subscribe({
       next: (response) => {
         this.setJwt(response.authenticatedJwt);
         this.loginLogoutChange.next(true);
+        this.router.navigate([''], { replaceUrl: true });
       },
       error: (error) => {
         console.error(error);
@@ -43,16 +44,24 @@ export class UserService {
   logout(): void {
     localStorage.removeItem(JWT_KEY);
     this.loginLogoutChange.next(false);
+    this.router.navigate(['/login'], { replaceUrl: true });
+  }
+
+  checkRedirect(): void {
+    if(this.isJWTSet())
+    {
+      this.router.navigate([''], { replaceUrl: true });
+    }
   }
 
   private fetchUserDetails(): void {
-    this.http.get('http://localhost:8080/users/me').subscribe((user) => {
+    this.http.post('http://localhost:8080/users/current', '').subscribe((user) => {
       this.user = user;
     });
   }
 
   private isJWTSet(): boolean {
-    return localStorage.getItem(JWT_KEY) !== null;
+    return Boolean(localStorage.getItem(JWT_KEY));
   }
 
   private setJwt(token: string): void {

@@ -1,17 +1,67 @@
-<form>
-  <label for="username">Username</label><br />
-  <input
-    type="text"
-    id="username"
-    name="username"
-    [(ngModel)]="username"
-  /><br />
-  <label for="password">Password</label><br />
-  <input
-    type="password"
-    id="password"
-    name="password"
-    [(ngModel)]="password"
-  /><br />
-  <button (click)="login()" type="button">login</button>
+<h1 mat-dialog-title>Login</h1>
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="username"
+        required
+        maxlength="32"
+        minlength="8"
+      />
+      <mat-error *ngIf="loginForm.controls['username'].errors?.required">
+        Username is required
+      </mat-error>
+      <mat-error *ngIf="loginForm.controls['username'].errors?.minlength">
+        Username must be between 8 and 32 characters
+      </mat-error>
+      <mat-error *ngIf="loginForm.controls['username'].errors?.maxlength">
+        Username must be between 8 and 32 characters
+      </mat-error>
+      <mat-error *ngIf="loginForm.controls['username'].errors?.pattern">
+        Username can only have lowercase/uppercase
+        <br /> letters, numbers and underscores
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        required
+        maxlength="32"
+        minlength="8"
+      />
+      <mat-error *ngIf="loginForm.controls['password'].errors?.required">
+        Password is required
+      </mat-error>
+      <mat-error *ngIf="loginForm.controls['password'].errors?.minlength">
+        Password must be between 8 and 32 characters
+      </mat-error>
+      <mat-error *ngIf="loginForm.controls['password'].errors?.maxlength">
+        Password must be between 8 and 32 characters
+      </mat-error>
+      <mat-error *ngIf="loginForm.controls['password'].errors?.pattern">
+        Password can only have lowercase/uppercase letters, 
+        <br /> numbers, and any of these symbols: @!#$%^&*_+=~
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <span fxFlex></span>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!loginForm.valid"
+    >
+      Submit
+    </button>
+  </div>
 </form>
+
+

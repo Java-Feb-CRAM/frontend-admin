@@ -26,6 +26,6 @@ export class HeaderComponent {
   }
 
   get firstName(): string {
-    return this.userService.user.givenName;
+    return this.userService.user.username;
   }
 }

@@ -19,6 +19,10 @@ const routes: Routes = [
     component: LoginPageComponent,
   },
   {
+    path: 'login',
+    component: LoginPageComponent,
+  },
+  {
     path: '**',
     component: NotFoundPageComponent,
   },

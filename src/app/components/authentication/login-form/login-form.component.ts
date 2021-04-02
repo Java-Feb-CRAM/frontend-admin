@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CredentialsDto } from '../../../models/CredentialsDto';
 import { UserService } from 'src/app/services/user.service';
-import { CredentialsDto } from 'src/app/models/CredentialsDto';
+
+export interface LoginFormData {
+  credentialsDto?: CredentialsDto;
+}
 
 @Component({
   selector: 'app-login-form',
@@ -8,12 +13,37 @@ import { CredentialsDto } from 'src/app/models/CredentialsDto';
   styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent {
-  username = '';
-  password = '';
+  loginForm = this.fb.group({
+    username: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(32),
+        Validators.pattern("^[a-zA-Z]+[a-zA-Z\\d_]+$"),
+      ],
+    ],
+    password: [
+      '', 
+      [
+        Validators.required, 
+        Validators.minLength(8),
+        Validators.maxLength(32),
+        Validators.pattern("[A-Za-z\\d@!#$%^&*_+=~]+$"),
+      ],
+    ],
+  });
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private fb: FormBuilder,
+  ) {
+    this.userService.checkRedirect()
+  }
 
-  login(): void {
-    this.userService.login(new CredentialsDto(this.username, this.password));
+  onSubmit(): void {
+    this.userService.login(new CredentialsDto(
+      this.loginForm.controls.username.value, 
+      this.loginForm.controls.password.value));
   }
 }
