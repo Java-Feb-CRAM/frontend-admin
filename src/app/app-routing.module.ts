@@ -4,26 +4,28 @@ import { IndexPageComponent } from './pages/index-page/index-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { AirportsPageComponent } from './pages/airports-page/airports-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
+    path: 'login',
+    component: LoginPageComponent,
+  },
+  {
     path: '',
     component: IndexPageComponent,
-  },
-  {
-    path: 'airports',
-    component: AirportsPageComponent,
-  },
-  {
-    path: 'login',
-    component: LoginPageComponent,
-  },
-  {
-    path: 'login',
-    component: LoginPageComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'airports',
+        canActivateChild: [AuthGuard],
+        component: AirportsPageComponent,
+      },
+    ],
   },
   {
     path: '**',
+    canActivate: [AuthGuard],
     component: NotFoundPageComponent,
   },
 ];

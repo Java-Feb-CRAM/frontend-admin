@@ -1,35 +1,64 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { CredentialsDto } from '../models/CredentialsDto';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, of, Subject } from 'rxjs';
+import { Router, UrlTree } from '@angular/router';
+import { catchError, map, mergeMap, timeout } from 'rxjs/operators';
 
 export const JWT_KEY = 'JWT';
+
+export interface UserInfo {
+  id?: number
+  role?: string
+  email?: string
+  username?: string
+  givenName?: string
+  familyName?: string
+  phoneNumber?: string
+}
+
 export interface LoginResponse {
-  authenticatedJwt: string;
+  authenticatedJwt: string
+}
+export interface RegistrationResponse {
+  accountVerificationToken: string
 }
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  isLoggedIn = false;
-  loginLogoutChange: Subject<boolean> = new Subject<boolean>();
-  user: any = {};
+  public isLoggedIn = false
+  public loginLogoutChange: Subject<boolean> = new Subject<boolean>() 
+  public user: UserInfo = {}
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) {
-    this.loginLogoutChange.subscribe((value) => {
-      this.isLoggedIn = value;
-      if (this.isLoggedIn) {
-        this.fetchUserDetails();
-      }
-    });
-    this.loginLogoutChange.next(this.isJWTSet());
+  constructor(
+    private router: Router, 
+    private http: HttpClient,
+    ) {    
+      this.loginLogoutChange.subscribe((value) => {
+        this.isLoggedIn = value;
+        if (this.isLoggedIn) {
+          this.fetchUserDetails();     
+        }
+      });
+      this.loginLogoutChange.next(this.isJWTSet());
   }
 
   loginUrl = 'http://localhost:8080/users/credentials/authenticate';
+  registrationUri = 'http://localhost:8080/users/new';
 
-  login(credentialsDto: CredentialsDto): void {
-    this.http.post<LoginResponse>(this.loginUrl, credentialsDto).subscribe({
+  register(userDetails: Object): void {
+    this.http.post<RegistrationResponse>(this.registrationUri, userDetails).subscribe({
+      next: (response) => {
+        this.router.navigate(['/login'], { replaceUrl: true });
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
+  }
+
+  login(credentials: Object): void {
+    this.http.post<LoginResponse>(this.loginUrl, credentials).subscribe({
       next: (response) => {
         this.setJwt(response.authenticatedJwt);
         this.loginLogoutChange.next(true);
@@ -54,10 +83,32 @@ export class UserService {
     }
   }
 
+  public isUserFetchSuccess(role: string): Observable<boolean | UrlTree> {
+    return this.http.get('http://localhost:8080/users/current')
+    .pipe( 
+        timeout(10000),
+        map(response => {
+          if ((response as UserInfo).role === role) {
+            this.user = response as UserInfo
+            return true
+          } else {
+            this.logout()        
+            return this.router.parseUrl('/login')
+          }
+        }),
+        catchError(() => {
+          return of(false);
+        }) 
+      ) 
+  }
+
   private fetchUserDetails(): void {
-    this.http.post('http://localhost:8080/users/current', '').subscribe((user) => {
-      this.user = user;
-    });
+    if (Boolean(localStorage.getItem(JWT_KEY)))
+    {
+      this.http.get('http://localhost:8080/users/current').subscribe((user) => {
+        this.user = user as UserInfo;      
+      });
+    }
   }
 
   private isJWTSet(): boolean {

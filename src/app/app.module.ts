@@ -34,10 +34,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FlightFormComponent } from './components/flight/flight-form/flight-form.component';
-import { RegistrationFormComponent } from './components/authentication/registration-form/registration-form.component';
 import { LoginFormComponent } from './components/authentication/login-form/login-form.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
 import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
@@ -53,10 +51,8 @@ import { AuthInterceptor } from './auth.interceptor';
     ConfirmDeleteComponent,
     AirportFormComponent,
     FlightFormComponent,
-    RegistrationFormComponent,
     LoginFormComponent,
     LoginPageComponent,
-    RegistrationPageComponent,
   ],
   imports: [
     BrowserModule,

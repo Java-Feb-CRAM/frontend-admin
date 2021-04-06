@@ -25,7 +25,7 @@ export class HeaderComponent {
     this.userService.logout();
   }
 
-  get firstName(): string {
-    return this.userService.user.username;
+  get firstName(): string|undefined {
+    return this.userService.user.givenName;
   }
 }

@@ -41,10 +41,6 @@
         <mat-icon>fingerprint</mat-icon>
         <span>Login</span>
       </button>
-      <button *ngIf="!isLoggedIn" mat-menu-item>
-        <mat-icon>cake</mat-icon>
-        <span>Signup</span>
-      </button>
       <button (click)="logout()" mat-menu-item [disabled]="!isLoggedIn">
         <mat-icon>lock_open</mat-icon>
         <span style="padding-right: 40px" ngStyle.lt-sm="padding-right: 10px;"
