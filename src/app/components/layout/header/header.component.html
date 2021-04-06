@@ -26,9 +26,11 @@
       >
     </mat-nav-list>
     <button mat-button [matMenuTriggerFor]="menu">
-      <mat-icon inline="true" class="default-menu-icon"
-        >person_outline</mat-icon
+      <mat-icon inline="true" 
+        class="default-menu-icon"
+        *ngIf="isLoggedIn">person_outline</mat-icon
       >
+      <span *ngIf="!isLoggedIn">Login</span>
       <span *ngIf="isLoggedIn">{{ firstName }}</span>
     </button>
     <mat-menu #menu="matMenu">
@@ -36,12 +38,12 @@
         routerLink="/login"
         routerLinkActive="active"
         mat-menu-item
-        [disabled]="isLoggedIn"
+        *ngIf="!isLoggedIn"
       >
         <mat-icon>fingerprint</mat-icon>
         <span>Login</span>
       </button>
-      <button (click)="logout()" mat-menu-item [disabled]="!isLoggedIn">
+      <button (click)="logout()" mat-menu-item *ngIf="isLoggedIn">
         <mat-icon>lock_open</mat-icon>
         <span style="padding-right: 40px" ngStyle.lt-sm="padding-right: 10px;"
           >Logout</span

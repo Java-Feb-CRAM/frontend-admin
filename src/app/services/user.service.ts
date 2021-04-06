@@ -19,9 +19,7 @@ export interface UserInfo {
 export interface LoginResponse {
   authenticatedJwt: string
 }
-export interface RegistrationResponse {
-  accountVerificationToken: string
-}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -43,22 +41,12 @@ export class UserService {
       this.loginLogoutChange.next(this.isJWTSet());
   }
 
-  loginUrl = 'http://localhost:8080/users/credentials/authenticate';
+  currentUserUri = 'http://localhost:8080/users/current'
+  loginUri = 'http://localhost:8080/users/credentials/authenticate';
   registrationUri = 'http://localhost:8080/users/new';
 
-  register(userDetails: Object): void {
-    this.http.post<RegistrationResponse>(this.registrationUri, userDetails).subscribe({
-      next: (response) => {
-        this.router.navigate(['/login'], { replaceUrl: true });
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    })
-  }
-
   login(credentials: Object): void {
-    this.http.post<LoginResponse>(this.loginUrl, credentials).subscribe({
+    this.http.post<LoginResponse>(this.loginUri, credentials).subscribe({
       next: (response) => {
         this.setJwt(response.authenticatedJwt);
         this.loginLogoutChange.next(true);
@@ -84,9 +72,9 @@ export class UserService {
   }
 
   public isUserFetchSuccess(role: string): Observable<boolean | UrlTree> {
-    return this.http.get('http://localhost:8080/users/current')
+    return this.http.get(this.currentUserUri)
     .pipe( 
-        timeout(10000),
+        timeout(1000),
         map(response => {
           if ((response as UserInfo).role === role) {
             this.user = response as UserInfo
@@ -105,9 +93,10 @@ export class UserService {
   private fetchUserDetails(): void {
     if (Boolean(localStorage.getItem(JWT_KEY)))
     {
-      this.http.get('http://localhost:8080/users/current').subscribe((user) => {
-        this.user = user as UserInfo;      
-      });
+      this.http.get('http://localhost:8080/users/current')
+        .subscribe((user) => {
+          this.user = user as UserInfo;
+        });
     }
   }
 
