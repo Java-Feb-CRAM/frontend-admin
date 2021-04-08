@@ -11,20 +11,14 @@ void setBuildStatus(String message, String state) {
 
 pipeline {
     agent any
-    // tools {
-    //   maven 'Maven 3.8.1'
-    //   jdk 'Java 15'
-    // }
     stages {
-      // stage('Test') {
-      //   steps {
-      //     setBuildStatus("Build pending", "PENDING")
-      //     echo 'Testing..'
-      //     script {
-      //       sh "mvn -s /var/lib/jenkins/settings.xml test"
-      //     }
-      //   }
-      // }
+      stage('Test') {
+        steps {
+          setBuildStatus("Build pending", "PENDING")
+          echo 'Testing..'
+          echo 'TODO'
+        }
+      }
         stage('Build') {
             steps {
                 echo 'Building..'
