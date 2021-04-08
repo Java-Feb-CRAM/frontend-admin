@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>{{ updating ? "Update Airport" : "Create Airport" }}</h1>
+
+<form [formGroup]="airportForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>IATA ID</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="iataId"
+        required
+        maxlength="3"
+        minlength="3"
+      />
+      <mat-error *ngIf="airportForm.controls['iataId'].errors?.required">
+        IATA ID is required
+      </mat-error>
+      <mat-error *ngIf="airportForm.controls['iataId'].errors?.minlength">
+        IATA ID must be exactly 3 characters
+      </mat-error>
+      <mat-error *ngIf="airportForm.controls['iataId'].errors?.maxlength">
+        IATA ID must be exactly 3 characters
+      </mat-error>
+      <mat-error *ngIf="airportForm.controls['iataId'].errors?.pattern">
+        IATA ID can only contain uppercase letters A-Z
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>City</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="city"
+        required
+        minlength="1"
+        maxlength="45"
+      />
+      <mat-error *ngIf="airportForm.controls['city'].errors?.required">
+        City is required
+      </mat-error>
+      <mat-error *ngIf="airportForm.controls['city'].errors?.maxlength">
+        City cannot exceed 45 characters in length
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <span fxFlex></span>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!airportForm.valid"
+    >
+      Submit
+    </button>
+  </div>
+</form>

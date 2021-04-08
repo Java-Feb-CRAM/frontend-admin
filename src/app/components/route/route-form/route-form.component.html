@@ -1,0 +1,55 @@
+<h1 mat-dialog-title>
+  {{ updating ? "Update Route" : "Create Route" }}
+</h1>
+
+<form [formGroup]="routeForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Origin Airport</mat-label>
+      <mat-select formControlName="originAirport" required>
+        <mat-option value="AAAA">Select an Airport</mat-option>
+        <mat-option *ngFor="let airport of airports" [value]="airport.iataId">
+          {{ airport.iataId }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="routeForm.controls['originAirport'].errors?.required">
+        Origin airport is required
+      </mat-error>
+      <mat-error *ngIf="routeForm.controls['originAirport'].errors?.maxlength">
+        Origin airport is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Destination Airport</mat-label>
+      <mat-select formControlName="destinationAirport" required>
+        <mat-option value="AAAA">Select an Airport</mat-option>
+        <mat-option *ngFor="let airport of airports" [value]="airport.iataId">
+          {{ airport.iataId }}
+        </mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="routeForm.controls['destinationAirport'].errors?.required"
+      >
+        Destination airport is required
+      </mat-error>
+      <mat-error
+        *ngIf="routeForm.controls['destinationAirport'].errors?.maxlength"
+      >
+        Destination airport is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <span fxFlex></span>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!routeForm.valid"
+    >
+      Submit
+    </button>
+  </div>
+</form>
