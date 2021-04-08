@@ -35,7 +35,7 @@ pipeline {
         stage('Deploy') {
            steps {
              echo 'Deploying..'
-               sh "aws s3 cp $WORKSPACE/dist/frontend-admin s3://ut-frontend-admin --recursive --include "*""
+               sh "aws s3 cp $WORKSPACE/dist/frontend-admin s3://ut-frontend-admin --recursive --include '*'"
                
            }
         }
