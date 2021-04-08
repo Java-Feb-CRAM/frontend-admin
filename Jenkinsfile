@@ -32,14 +32,13 @@ pipeline {
                 sh "ng build --prod"
             }
         }
-        // stage('Deploy') {
-        //    steps {
-        //        sh "touch ECSService.yml"
-        //        sh "rm ECSService.yml"
-        //        sh "wget https://raw.githubusercontent.com/SmoothstackUtopiaProject/CloudFormationTemplates/main/ECSService.yml"
-        //        sh "aws cloudformation deploy --stack-name UtopiaFlightMS --template-file ./ECSService.yml --parameter-overrides ApplicationName=UtopiaFlightMS ECRepositoryUri=$AWS_ID/utopiaairlines/flightms:$COMMIT_HASH DBUsername=$DB_USERNAME DBPassword=$DB_PASSWORD SubnetID=$SUBNET_ID SecurityGroupID=$SECURITY_GROUP_ID TGArn=$UTOPIA_FLIGHTMS_TARGETGROUP --capabilities \"CAPABILITY_IAM\" \"CAPABILITY_NAMED_IAM\""
-        //    }
-        // }
+        stage('Deploy') {
+           steps {
+             echo 'Deploying..'
+               sh "aws s3 cp $WORKSPACE/dist/frontend-admin s3://ut-frontend-admin --recursive --include "*""
+               
+           }
+        }
         // stage('Cleanup') {
         //     steps {
         //       echo 'Cleaning up..'
