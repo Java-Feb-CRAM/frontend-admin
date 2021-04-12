@@ -3,14 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Route } from '../models/Route';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RouteService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.routesUrl = `${environment.apiBase}/routes`;
+  }
 
-  routesUrl = 'http://localhost:8081/routes';
+  routesUrl: string;
 
   getAllRoutes(): Observable<Route[]> {
     return this.http.get<Route[]>(this.routesUrl).pipe(

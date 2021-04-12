@@ -3,13 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Airplane } from '../models/Airplane';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AirplaneService {
-  constructor(private http: HttpClient) {}
-  airplanesUrl = 'http://localhost:8081/airplanes';
+  constructor(private http: HttpClient) {
+    this.airplanesUrl = `${environment.apiBase}/airplanes`;
+  }
+  airplanesUrl: string;
 
   getAllAirplanes(): Observable<Airplane[]> {
     return this.http.get<Airplane[]>(this.airplanesUrl).pipe(
