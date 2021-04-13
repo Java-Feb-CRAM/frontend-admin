@@ -42,29 +42,30 @@ pipeline {
           waitForQualityGate abortPipeline: true
         }
       }
-      stage('Deploy') {
-        steps {
-          echo 'Deploying..'
-          sh "aws s3 cp $WORKSPACE/dist/frontend-admin s3://ut-frontend-admin --recursive --include '*'"
+    }
+    stage('Deploy') {
+      steps {
+        echo 'Deploying..'
+        sh "aws s3 cp $WORKSPACE/dist/frontend-admin s3://ut-frontend-admin --recursive --include '*'"
 
-        }
       }
-    }
-    post {
-      always {
-        cleanWs(cleanWhenNotBuilt: false,
-          deleteDirs: true,
-          disableDeferredWipeout: true,
-          notFailBuild: true,
-          patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
-                     [pattern: '.propsfile', type: 'EXCLUDE']])
-      }
-    }
-    success {
-      setBuildStatus("Build succeeded", "SUCCESS")
-    }
-    failure {
-      setBuildStatus("Build failed", "FAILURE")
     }
   }
+  post {
+    always {
+      cleanWs(cleanWhenNotBuilt: false,
+        deleteDirs: true,
+        disableDeferredWipeout: true,
+        notFailBuild: true,
+        patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+                   [pattern: '.propsfile', type: 'EXCLUDE']])
+    }
+  }
+  success {
+    setBuildStatus("Build succeeded", "SUCCESS")
+  }
+  failure {
+    setBuildStatus("Build failed", "FAILURE")
+  }
+}
 }
