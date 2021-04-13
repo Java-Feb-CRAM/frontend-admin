@@ -10,19 +10,27 @@
   </button>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+<table
+  mat-table
+  [dataSource]="dataSource"
+  class="mat-elevation-z8"
+  matSort
+  aria-describedby="Airplanes"
+>
   <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header scope="row">ID</th>
     <td mat-cell *matCellDef="let rowItem">{{ rowItem.id }}</td>
   </ng-container>
 
   <ng-container matColumnDef="airplaneType">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Airplane Type</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header scope="row">
+      Airplane Type
+    </th>
     <td mat-cell *matCellDef="let rowItem">{{ rowItem.airplaneType.id }}</td>
   </ng-container>
 
   <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef></th>
+    <th mat-header-cell *matHeaderCellDef scope="row"></th>
     <td mat-cell *matCellDef="let rowItem">
       <span fxFlex></span>
       <button
