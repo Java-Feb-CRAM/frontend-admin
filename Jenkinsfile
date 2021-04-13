@@ -60,12 +60,11 @@ pipeline {
         patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
                    [pattern: '.propsfile', type: 'EXCLUDE']])
     }
+    success {
+      setBuildStatus("Build succeeded", "SUCCESS")
+    }
+    failure {
+      setBuildStatus("Build failed", "FAILURE")
+    }
   }
-  success {
-    setBuildStatus("Build succeeded", "SUCCESS")
-  }
-  failure {
-    setBuildStatus("Build failed", "FAILURE")
-  }
-}
 }
