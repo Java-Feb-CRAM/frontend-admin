@@ -18,7 +18,7 @@ export class AirplaneTypeFormComponent {
   });
   updating = false;
   constructor(
-    private fb: FormBuilder,
+    private readonly fb: FormBuilder,
     public dialogRef: MatDialogRef<AirplaneTypeFormData>,
     @Inject(MAT_DIALOG_DATA) public data: AirplaneTypeFormData
   ) {

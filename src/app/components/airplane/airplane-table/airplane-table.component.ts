@@ -54,7 +54,6 @@ export class AirplaneTableComponent implements OnChanges {
 
   update(): void {
     this.dataSource.data = this.airplanes;
-    //this.table.renderRows();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
