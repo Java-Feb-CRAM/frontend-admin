@@ -28,7 +28,7 @@ export class AirportFormComponent {
   updating = false;
 
   constructor(
-    private fb: FormBuilder,
+    private readonly fb: FormBuilder,
     public dialogRef: MatDialogRef<AirportFormData>,
     @Inject(MAT_DIALOG_DATA) public data: AirportFormData
   ) {

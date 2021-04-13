@@ -20,7 +20,10 @@ export class RoutesPageComponent implements OnInit {
   routes: Route[] = [];
   @ViewChild(RouteTableComponent) table: RouteTableComponent | null = null;
 
-  constructor(private routeService: RouteService, public dialog: MatDialog) {}
+  constructor(
+    private readonly routeService: RouteService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.routeService.getAllRoutes().subscribe((data) => (this.routes = data));
@@ -47,7 +50,7 @@ export class RoutesPageComponent implements OnInit {
   showDetails(id: number): void {
     const route = this.findRouteById(id);
     if (route) {
-      const detailsDialog = this.dialog.open(RouteDetailsComponent, {
+      this.dialog.open(RouteDetailsComponent, {
         data: {
           route,
         },
@@ -82,7 +85,7 @@ export class RoutesPageComponent implements OnInit {
         if (result instanceof Route) {
           this.routeService.createRoute(result).subscribe((data) => {
             this.routes.push(data);
-            this.routes = this.routes.sort((a, b) => {
+            this.routes = [...this.routes].sort((a, b) => {
               if (a.id < b.id) {
                 return -1;
               } else if (a.id > b.id) {

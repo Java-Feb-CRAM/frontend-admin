@@ -28,10 +28,10 @@ export class RouteFormComponent implements OnInit {
   updating = false;
   airports: Airport[] = [];
   constructor(
-    private fb: FormBuilder,
+    private readonly fb: FormBuilder,
     public dialogRef: MatDialogRef<RouteFormData>,
     @Inject(MAT_DIALOG_DATA) public data: RouteFormData,
-    private airportService: AirportService
+    private readonly airportService: AirportService
   ) {
     if (data && data.route) {
       this.routeForm.patchValue({

@@ -21,7 +21,7 @@ export class AirportsPageComponent implements OnInit {
   @ViewChild(AirportTableComponent) table: AirportTableComponent | null = null;
 
   constructor(
-    private airportService: AirportService,
+    private readonly airportService: AirportService,
     public dialog: MatDialog
   ) {}
 
@@ -52,7 +52,7 @@ export class AirportsPageComponent implements OnInit {
   showDetails(iataId: string): void {
     const airport = this.findAirportById(iataId);
     if (airport) {
-      const detailsDialog = this.dialog.open(AirportDetailsComponent, {
+      this.dialog.open(AirportDetailsComponent, {
         data: {
           airport,
         },
@@ -88,15 +88,9 @@ export class AirportsPageComponent implements OnInit {
         if (result instanceof Airport) {
           this.airportService.createAirport(result).subscribe((data) => {
             this.airports.push(data);
-            this.airports = this.airports.sort((a, b) => {
-              if (a.iataId < b.iataId) {
-                return -1;
-              } else if (a.iataId > b.iataId) {
-                return 1;
-              } else {
-                return 0;
-              }
-            });
+            this.airports = [...this.airports].sort((a, b) =>
+              b.iataId.localeCompare(a.iataId)
+            );
             this.table?.update();
           });
         }
