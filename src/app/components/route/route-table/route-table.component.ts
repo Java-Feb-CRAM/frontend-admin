@@ -54,7 +54,7 @@ export class RouteTableComponent implements OnChanges {
 
   update(): void {
     this.dataSource.data = this.routes;
-    this.table.renderRows();
+    //this.table.renderRows();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
