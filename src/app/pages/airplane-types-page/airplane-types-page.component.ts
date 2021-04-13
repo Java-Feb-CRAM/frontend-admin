@@ -21,7 +21,7 @@ export class AirplaneTypesPageComponent implements OnInit {
   @ViewChild(AirplaneTypeTableComponent)
   table: AirplaneTypeTableComponent | null = null;
   constructor(
-    private airplaneTypeService: AirplaneTypeService,
+    private readonly airplaneTypeService: AirplaneTypeService,
     public dialog: MatDialog
   ) {}
 
@@ -52,7 +52,7 @@ export class AirplaneTypesPageComponent implements OnInit {
   showDetails(id: number): void {
     const airplaneType = this.findAirplaneTypeById(id);
     if (airplaneType) {
-      const detailsDialog = this.dialog.open(AirplaneTypeDetailsComponent, {
+      this.dialog.open(AirplaneTypeDetailsComponent, {
         data: {
           airplaneType,
         },
@@ -91,7 +91,7 @@ export class AirplaneTypesPageComponent implements OnInit {
             .createAirplaneType(result)
             .subscribe((data) => {
               this.airplaneTypes.push(data);
-              this.airplaneTypes = this.airplaneTypes.sort((a, b) => {
+              this.airplaneTypes = [...this.airplaneTypes].sort((a, b) => {
                 if (a.id < b.id) {
                   return -1;
                 } else if (a.id > b.id) {

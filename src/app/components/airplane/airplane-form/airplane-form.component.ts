@@ -21,10 +21,10 @@ export class AirplaneFormComponent implements OnInit {
   updating = false;
   airplaneTypes: AirplaneType[] = [];
   constructor(
-    private fb: FormBuilder,
+    private readonly fb: FormBuilder,
     public dialogRef: MatDialogRef<AirplaneFormData>,
     @Inject(MAT_DIALOG_DATA) public data: AirplaneFormData,
-    private airplaneTypeService: AirplaneTypeService
+    private readonly airplaneTypeService: AirplaneTypeService
   ) {
     if (data && data.airplane) {
       this.airplaneForm.patchValue({

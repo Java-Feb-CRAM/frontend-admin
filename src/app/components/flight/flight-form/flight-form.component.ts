@@ -31,11 +31,11 @@ export class FlightFormComponent implements OnInit {
   routes: Route[] = [];
   airplanes: Airplane[] = [];
   constructor(
-    private fb: FormBuilder,
+    private readonly fb: FormBuilder,
     public dialogRef: MatDialogRef<FlightFormData>,
     @Inject(MAT_DIALOG_DATA) public data: FlightFormData,
-    private routeService: RouteService,
-    private airplaneService: AirplaneService
+    private readonly routeService: RouteService,
+    private readonly airplaneService: AirplaneService
   ) {
     if (data && data.flight) {
       const date = new Date(data.flight.departureTime.getTime());
@@ -91,7 +91,6 @@ export class FlightFormComponent implements OnInit {
       flight.reservedSeats = this.flightForm.controls.reservedSeats.value;
       flight.seatPrice = this.flightForm.controls.seatPrice.value;
     } else {
-      //flight = new Flight();
       flight = new Flight(
         0,
         new Route(

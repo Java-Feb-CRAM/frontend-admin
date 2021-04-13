@@ -20,7 +20,10 @@ export class FlightsPageComponent implements OnInit {
   flights: Flight[] = [];
   @ViewChild(FlightTableComponent) table: FlightTableComponent | null = null;
 
-  constructor(private flightService: FlightService, public dialog: MatDialog) {}
+  constructor(
+    private readonly flightService: FlightService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.flightService
@@ -49,7 +52,7 @@ export class FlightsPageComponent implements OnInit {
   showDetails(id: number): void {
     const flight = this.findFlightById(id);
     if (flight) {
-      const detailsDialog = this.dialog.open(FlightDetailsComponent, {
+      this.dialog.open(FlightDetailsComponent, {
         data: {
           flight,
         },
@@ -84,7 +87,7 @@ export class FlightsPageComponent implements OnInit {
         if (result instanceof Flight) {
           this.flightService.createFlight(result).subscribe((data) => {
             this.flights.push(data);
-            this.flights = this.flights.sort((a, b) => {
+            this.flights = [...this.flights].sort((a, b) => {
               if (a.id < b.id) {
                 return -1;
               } else if (a.id > b.id) {

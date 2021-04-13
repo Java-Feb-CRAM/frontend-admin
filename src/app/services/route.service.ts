@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class RouteService {
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
     this.routesUrl = `${environment.apiBase}/routes`;
   }
 
