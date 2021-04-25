@@ -5,9 +5,8 @@ export class UserRole {
     public id: number,
     public token: string,
     public user: User,
-    public expiryDate: Date,
-    ) 
-  {
+    public expiryDate: Date
+  ) {
     this.id = id;
     this.token = token;
     this.user = user;

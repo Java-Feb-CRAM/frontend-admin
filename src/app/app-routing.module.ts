@@ -16,23 +16,33 @@ const routes: Routes = [
     component: LoginPageComponent,
   },
   {
+    path: '',
+    canActivate: [AuthGuard],
+    component: IndexPageComponent,
+  },
+  {
     path: 'airplanes',
+    canActivate: [AuthGuard],
     component: AirplanesPageComponent,
   },
   {
     path: 'airplane-types',
+    canActivate: [AuthGuard],
     component: AirplaneTypesPageComponent,
   },
   {
     path: 'airports',
+    canActivate: [AuthGuard],
     component: AirportsPageComponent,
   },
   {
     path: 'flights',
+    canActivate: [AuthGuard],
     component: FlightsPageComponent,
   },
   {
     path: 'routes',
+    canActivate: [AuthGuard],
     component: RoutesPageComponent,
   },
   {
@@ -45,4 +55,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

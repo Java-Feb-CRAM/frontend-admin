@@ -20,30 +20,30 @@ export class LoginFormComponent {
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(32),
-        Validators.pattern("^[a-zA-Z]+[a-zA-Z\\d_]+$"),
+        Validators.pattern('^[a-zA-Z]+[a-zA-Z\\d_]+$'),
       ],
     ],
     password: [
-      '', 
+      '',
       [
-        Validators.required, 
+        Validators.required,
         Validators.minLength(8),
         Validators.maxLength(32),
-        Validators.pattern("[A-Za-z\\d@!#$%^&*_+=~]+$"),
+        Validators.pattern('[A-Za-z\\d@!#$%^&*_+=~]+$'),
       ],
     ],
   });
 
-  constructor(
-    private userService: UserService,
-    private fb: FormBuilder,
-  ) {
-    this.userService.checkRedirect()
+  constructor(private userService: UserService, private fb: FormBuilder) {
+    this.userService.checkRedirect();
   }
 
   onSubmit(): void {
-    this.userService.login(new CredentialsDto(
-      this.loginForm.controls.username.value, 
-      this.loginForm.controls.password.value));
+    this.userService.login(
+      new CredentialsDto(
+        this.loginForm.controls.username.value,
+        this.loginForm.controls.password.value
+      )
+    );
   }
 }

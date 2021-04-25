@@ -7,7 +7,7 @@ export class User {
     public password: string,
     public givenName: string,
     public familyName: string,
-    public phoneNumber: string,
+    public phoneNumber: string
   ) {
     this.id = id;
     this.role = role;

@@ -23,7 +23,8 @@
       </mat-error>
       <mat-error *ngIf="loginForm.controls['username'].errors?.pattern">
         Username can only have lowercase/uppercase
-        <br /> letters, numbers and underscores
+        <br />
+        letters, numbers and underscores
       </mat-error>
     </mat-form-field>
     <mat-form-field>
@@ -46,8 +47,9 @@
         Password must be between 8 and 32 characters
       </mat-error>
       <mat-error *ngIf="loginForm.controls['password'].errors?.pattern">
-        Password can only have lowercase/uppercase letters, 
-        <br /> numbers, and any of these symbols: @!#$%^&*_+=~
+        Password can only have lowercase/uppercase letters,
+        <br />
+        numbers, and any of these symbols: @!#$%^&*_+=~
       </mat-error>
     </mat-form-field>
   </div>
@@ -63,5 +65,3 @@
     </button>
   </div>
 </form>
-
-
