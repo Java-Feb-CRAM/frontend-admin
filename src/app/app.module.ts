@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IndexPageComponent } from './pages/index-page/index-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
@@ -34,6 +34,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FlightFormComponent } from './components/flight/flight-form/flight-form.component';
+import { LoginFormComponent } from './components/authentication/login-form/login-form.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { AuthInterceptor } from './auth.interceptor';
 import { AirportDetailsComponent } from './components/airport/airport-details/airport-details.component';
 import { AirplaneTypeDetailsComponent } from './components/airplane-type/airplane-type-details/airplane-type-details.component';
 import { AirplaneTypeFormComponent } from './components/airplane-type/airplane-type-form/airplane-type-form.component';
@@ -63,6 +66,8 @@ import { FlightsPageComponent } from './pages/flights-page/flights-page.componen
     ConfirmDeleteComponent,
     AirportFormComponent,
     FlightFormComponent,
+    LoginFormComponent,
+    LoginPageComponent,
     AirportDetailsComponent,
     AirplaneTypeDetailsComponent,
     AirplaneTypeFormComponent,
@@ -106,7 +111,13 @@ import { FlightsPageComponent } from './pages/flights-page/flights-page.componen
     NgxMaterialTimepickerModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
   exports: [],
 })
