@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
 import { Router, UrlTree } from '@angular/router';
 import { catchError, map, mergeMap, timeout } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 export const JWT_KEY = 'JWT';
 
