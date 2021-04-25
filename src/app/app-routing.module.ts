@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { IndexPageComponent } from './pages/index-page/index-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { AirportsPageComponent } from './pages/airports-page/airports-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { AuthGuard } from './auth/auth.guard';
 import { AirplaneTypesPageComponent } from './pages/airplane-types-page/airplane-types-page.component';
 import { AirplanesPageComponent } from './pages/airplanes-page/airplanes-page.component';
 import { RoutesPageComponent } from './pages/routes-page/routes-page.component';
@@ -10,8 +12,8 @@ import { FlightsPageComponent } from './pages/flights-page/flights-page.componen
 
 const routes: Routes = [
   {
-    path: '',
-    component: IndexPageComponent,
+    path: 'login',
+    component: LoginPageComponent,
   },
   {
     path: 'airplanes',
