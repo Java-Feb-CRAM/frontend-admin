@@ -26,9 +26,8 @@
       >
     </mat-nav-list>
     <button mat-button [matMenuTriggerFor]="menu">
-      <mat-icon inline="true" 
-        class="default-menu-icon"
-        *ngIf="isLoggedIn">person_outline</mat-icon
+      <mat-icon inline="true" class="default-menu-icon" *ngIf="isLoggedIn"
+        >person_outline</mat-icon
       >
       <span *ngIf="!isLoggedIn">Login</span>
       <span *ngIf="isLoggedIn">{{ firstName }}</span>

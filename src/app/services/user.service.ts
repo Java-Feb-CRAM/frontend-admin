@@ -8,41 +8,38 @@ import { environment } from '../../environments/environment';
 export const JWT_KEY = 'JWT';
 
 export interface UserInfo {
-  id?: number
-  role?: string
-  email?: string
-  username?: string
-  givenName?: string
-  familyName?: string
-  phoneNumber?: string
+  id?: number;
+  role?: string;
+  email?: string;
+  username?: string;
+  givenName?: string;
+  familyName?: string;
+  phoneNumber?: string;
 }
 
 export interface LoginResponse {
-  authenticatedJwt: string
+  authenticatedJwt: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  public isLoggedIn = false
-  public loginLogoutChange: Subject<boolean> = new Subject<boolean>() 
-  public user: UserInfo = {}
+  public isLoggedIn = false;
+  public loginLogoutChange: Subject<boolean> = new Subject<boolean>();
+  public user: UserInfo = {};
 
-  constructor(
-    private router: Router, 
-    private http: HttpClient,
-    ) {    
-      this.loginLogoutChange.subscribe((value) => {
-        this.isLoggedIn = value;
-        if (this.isLoggedIn) {
-          this.fetchUserDetails();     
-        }
-      });
-      this.loginLogoutChange.next(this.isJWTSet());
-      this.currentUserUri = `${environment.apiBase}/users/current`;
-      this.loginUri = `${environment.apiBase}/users/credentials/authenticate`;
-      this.registrationUri = `${environment.apiBase}/users/new`;
+  constructor(private router: Router, private http: HttpClient) {
+    this.loginLogoutChange.subscribe((value) => {
+      this.isLoggedIn = value;
+      if (this.isLoggedIn) {
+        this.fetchUserDetails();
+      }
+    });
+    this.loginLogoutChange.next(this.isJWTSet());
+    this.currentUserUri = `${environment.apiBase}/users/current`;
+    this.loginUri = `${environment.apiBase}/users/credentials/authenticate`;
+    this.registrationUri = `${environment.apiBase}/users/new`;
   }
 
   currentUserUri: string;
@@ -69,38 +66,34 @@ export class UserService {
   }
 
   checkRedirect(): void {
-    if(this.isJWTSet())
-    {
+    if (this.isJWTSet()) {
       this.router.navigate([''], { replaceUrl: true });
     }
   }
 
   public isUserFetchSuccess(role: string): Observable<boolean | UrlTree> {
-    return this.http.get(this.currentUserUri)
-    .pipe( 
-        timeout(1000),
-        map(response => {
-          if ((response as UserInfo).role === role) {
-            this.user = response as UserInfo
-            return true
-          } else {
-            this.logout()        
-            return this.router.parseUrl('/login')
-          }
-        }),
-        catchError(() => {
-          return of(false);
-        }) 
-      ) 
+    return this.http.get(this.currentUserUri).pipe(
+      timeout(1000),
+      map((response) => {
+        if ((response as UserInfo).role === role) {
+          this.user = response as UserInfo;
+          return true;
+        } else {
+          this.logout();
+          return this.router.parseUrl('/login');
+        }
+      }),
+      catchError(() => {
+        return of(false);
+      })
+    );
   }
 
   private fetchUserDetails(): void {
-    if (Boolean(localStorage.getItem(JWT_KEY)))
-    {
-      this.http.get(this.currentUserUri)
-        .subscribe((user) => {
-          this.user = user as UserInfo;
-        });
+    if (Boolean(localStorage.getItem(JWT_KEY))) {
+      this.http.get(this.currentUserUri).subscribe((user) => {
+        this.user = user as UserInfo;
+      });
     }
   }
 

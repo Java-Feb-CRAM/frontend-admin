@@ -4,10 +4,6 @@
 
 <form [formGroup]="flightForm" (ngSubmit)="onSubmit()">
   <div mat-dialog-content>
-    <pre>
-      {{ flightForm.controls.departureDate.value | json }}
-      {{ flightForm.controls.departureTime.value | json }}
-    </pre>
     <mat-form-field>
       <mat-label>Route</mat-label>
       <mat-select formControlName="route" required>
