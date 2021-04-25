@@ -39,11 +39,14 @@ export class UserService {
         }
       });
       this.loginLogoutChange.next(this.isJWTSet());
+      this.currentUserUri = `${environment.apiBase}/users/current`;
+      this.loginUri = `${environment.apiBase}/users/credentials/authenticate`;
+      this.registrationUri = `${environment.apiBase}/users/new`;
   }
 
-  currentUserUri = 'http://localhost:8080/users/current'
-  loginUri = 'http://localhost:8080/users/credentials/authenticate';
-  registrationUri = 'http://localhost:8080/users/new';
+  currentUserUri: string;
+  loginUri: string;
+  registrationUri: string;
 
   login(credentials: Object): void {
     this.http.post<LoginResponse>(this.loginUri, credentials).subscribe({
@@ -93,7 +96,7 @@ export class UserService {
   private fetchUserDetails(): void {
     if (Boolean(localStorage.getItem(JWT_KEY)))
     {
-      this.http.get('http://localhost:8080/users/current')
+      this.http.get(this.currentUserUri)
         .subscribe((user) => {
           this.user = user as UserInfo;
         });
