@@ -1,57 +1,117 @@
-<!--@NotNull(message = "Route ID is required")-->
-<!--@Positive(message = "Route ID must be a positive integer")-->
-<!--private Long routeId;-->
+<h1 mat-dialog-title>
+  {{ updating ? "Update Flight" : "Create Flight" }}
+</h1>
 
-<!--@NotNull(message = "Airplane ID is required")-->
-<!--@Positive(message = "Airplane ID must be a positive integer")-->
-<!--private Long airplaneId;-->
+<form [formGroup]="flightForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+    <pre>
+      {{ flightForm.controls.departureDate.value | json }}
+      {{ flightForm.controls.departureTime.value | json }}
+    </pre>
+    <mat-form-field>
+      <mat-label>Route</mat-label>
+      <mat-select formControlName="route" required>
+        <mat-option value="-1">Select a Route</mat-option>
+        <mat-option *ngFor="let route of routes" [value]="route.id">
+          {{ route.originAirport.iataId }} &rarr;
+          {{ route.destinationAirport.iataId }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="flightForm.controls['route'].errors?.required">
+        Route is required
+      </mat-error>
+      <mat-error *ngIf="flightForm.controls['route'].errors?.min">
+        Route is required
+      </mat-error>
+    </mat-form-field>
 
-<!--@NotNull(message = "Departure time is required")-->
-<!--private Instant departureTime;-->
-
-<!--@NotNull(message = "Number of reserved seats is required")-->
-<!--@PositiveOrZero(message = "Number of reserved seats must be 0 or greater")-->
-<!--private Integer reservedSeats;-->
-
-<!--@NotNull(message = "Seat price is required")-->
-<!--@PositiveOrZero(message = "Seat price must be 0 or greater")-->
-<!--private Float seatPrice;-->
-
-<form>
-  <mat-form-field>
-    <mat-label>Route</mat-label>
-    <mat-select>
-      <mat-option value="one">First option</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Airplane</mat-label>
-    <mat-select>
-      <mat-option value="one">First option</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Departure Date</mat-label>
-    <input matInput [matDatepicker]="picker" />
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Departure Time</mat-label>
-    <input matInput [ngxTimepicker]="picker2" />
-    <ngx-material-timepicker-toggle
-      matSuffix
-      [for]="picker2"
-    ></ngx-material-timepicker-toggle>
-    <ngx-material-timepicker #picker2></ngx-material-timepicker>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Reserved Seats</mat-label>
-    <input matInput type="number" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Seat Price</mat-label>
-    <input matInput type="number" step="0.01" />
-    <span matPrefix>$&nbsp;</span>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Airplane</mat-label>
+      <mat-select formControlName="airplane" required>
+        <mat-option value="-1">Select an Airplane</mat-option>
+        <mat-option *ngFor="let airplane of airplanes" [value]="airplane.id">
+          {{ airplane.id }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="flightForm.controls['airplane'].errors?.required">
+        Airplane is required
+      </mat-error>
+      <mat-error *ngIf="flightForm.controls['airplane'].errors?.min">
+        Airplane is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Departure Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="dDatePicker"
+        formControlName="departureDate"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="dDatePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #dDatePicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Departure Time</mat-label>
+      <input
+        matInput
+        [ngxTimepicker]="dTimePicker"
+        formControlName="departureTime"
+      />
+      <ngx-material-timepicker-toggle
+        matSuffix
+        [for]="dTimePicker"
+      ></ngx-material-timepicker-toggle>
+      <ngx-material-timepicker #dTimePicker></ngx-material-timepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Reserved Seats</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="reservedSeats"
+        required
+        min="0"
+        step="0"
+      />
+      <mat-error *ngIf="flightForm.controls['reservedSeats'].errors?.required">
+        Reserved seats required
+      </mat-error>
+      <mat-error *ngIf="flightForm.controls['reservedSeats'].errors?.min">
+        Reserved seats must be 0 or greater
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Seat Price</mat-label>
+      <input
+        matInput
+        type="number"
+        formControlName="seatPrice"
+        required
+        min="0"
+        step="0.01"
+      />
+      <span matPrefix>$</span>
+      <mat-error *ngIf="flightForm.controls['seatPrice'].errors?.required">
+        Seat price is required
+      </mat-error>
+      <mat-error *ngIf="flightForm.controls['seatPrice'].errors?.min">
+        Seat price must be 0 or greater
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <span fxFlex></span>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!flightForm.valid"
+    >
+      Submit
+    </button>
+  </div>
 </form>

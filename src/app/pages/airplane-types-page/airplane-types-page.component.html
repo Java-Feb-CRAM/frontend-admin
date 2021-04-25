@@ -1,0 +1,6 @@
+<p>airplane-types-page works!</p>
+<app-airplane-type-table
+  [airplaneTypes]="airplaneTypes"
+  (airplaneTypeTableEvent)="handleTableEvent($event)"
+  (addEvent)="showCreateForm($event)"
+></app-airplane-type-table>

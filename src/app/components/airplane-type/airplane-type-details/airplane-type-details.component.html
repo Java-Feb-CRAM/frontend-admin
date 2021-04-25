@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Airplane Type Details</h1>
+
+<div mat-dialog-content>
+  <ul>
+    <li>ID: {{ data.airplaneType.id }}</li>
+    <li>Max Capacity: {{ data.airplaneType.maxCapacity }}</li>
+    <li>Airplanes of this type: {{ airplanes }}</li>
+  </ul>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Close</button>
+</div>

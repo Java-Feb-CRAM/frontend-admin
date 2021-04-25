@@ -1,11 +1,11 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   Output,
   SimpleChanges,
   ViewChild,
-  EventEmitter,
 } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Airport } from '../../../models/Airport';

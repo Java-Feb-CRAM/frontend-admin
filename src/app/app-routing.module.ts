@@ -5,6 +5,10 @@ import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.com
 import { AirportsPageComponent } from './pages/airports-page/airports-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AuthGuard } from './auth/auth.guard';
+import { AirplaneTypesPageComponent } from './pages/airplane-types-page/airplane-types-page.component';
+import { AirplanesPageComponent } from './pages/airplanes-page/airplanes-page.component';
+import { RoutesPageComponent } from './pages/routes-page/routes-page.component';
+import { FlightsPageComponent } from './pages/flights-page/flights-page.component';
 
 const routes: Routes = [
   {
@@ -12,20 +16,27 @@ const routes: Routes = [
     component: LoginPageComponent,
   },
   {
-    path: '',
-    component: IndexPageComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: 'airports',
-        canActivateChild: [AuthGuard],
-        component: AirportsPageComponent,
-      },
-    ],
+    path: 'airplanes',
+    component: AirplanesPageComponent,
+  },
+  {
+    path: 'airplane-types',
+    component: AirplaneTypesPageComponent,
+  },
+  {
+    path: 'airports',
+    component: AirportsPageComponent,
+  },
+  {
+    path: 'flights',
+    component: FlightsPageComponent,
+  },
+  {
+    path: 'routes',
+    component: RoutesPageComponent,
   },
   {
     path: '**',
-    canActivate: [AuthGuard],
     component: NotFoundPageComponent,
   },
 ];

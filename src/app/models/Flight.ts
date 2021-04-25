@@ -22,7 +22,7 @@ export class Flight {
     this.id = id;
     this.route = route;
     this.airplane = airplane;
-    this.departureTime = departureTime;
+    this.departureTime = new Date(departureTime);
     this.reservedSeats = reservedSeats;
     this.seatPrice = seatPrice;
     this.bookings = bookings;

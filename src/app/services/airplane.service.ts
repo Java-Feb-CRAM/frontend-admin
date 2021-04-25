@@ -1,46 +1,59 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Airplane } from '../models/Airplane';
-import { CreateAirplaneDto } from '../components/flight-plane/dto/CreateAirplaneDto';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AirplaneService {
-  constructor(private http: HttpClient) {}
-  airplanesUrl = 'http://localhost:8082/airplanes';
-
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
-    } else {
-      console.error(
-        `Backend returned code ${error.status},` + `body was: ${error.error}`
-      );
-    }
-    return throwError('Something bad happened; please try again later.');
+  constructor(private readonly http: HttpClient) {
+    this.airplanesUrl = `${environment.apiBase}/airplanes`;
   }
+  airplanesUrl: string;
 
   getAllAirplanes(): Observable<Airplane[]> {
-    return this.http
-      .get<Airplane[]>(this.airplanesUrl)
-      .pipe(catchError(this.handleError));
+    return this.http.get<Airplane[]>(this.airplanesUrl).pipe(
+      map(
+        (data: Airplane[]) =>
+          data.map((airplane) => {
+            return new Airplane(
+              airplane.id,
+              airplane.airplaneType,
+              airplane.flights
+            );
+          }),
+        catchError((error) => {
+          return throwError('Something went wrong!');
+        })
+      )
+    );
   }
 
-  getAirplane(airplaneId: number): Observable<Airplane> {
-    return this.http
-      .get<Airplane>(this.airplanesUrl + `/${airplaneId}`)
-      .pipe(catchError(this.handleError));
+  createAirplane(airplane: Airplane): Observable<Airplane> {
+    const createAirplane = {
+      airplaneTypeId: airplane.airplaneType.id,
+    };
+    return this.http.post<Airplane>(this.airplanesUrl, createAirplane).pipe(
+      map((data: Airplane) => {
+        return new Airplane(data.id, data.airplaneType, []);
+      }),
+      catchError((error) => {
+        return throwError('Something went wrong!');
+      })
+    );
   }
 
-  createAirplane(createAirplaneDto: CreateAirplaneDto): Observable<Airplane> {
-    return this.http.post<Airplane>(this.airplanesUrl, createAirplaneDto);
-    // .pipe(catchError(this.handleError('createAirplane', createAirplaneDto)));
+  updateAirplane(id: number, airplane: Airplane): Observable<{}> {
+    const updateAirplane = {
+      airplaneTypeId: airplane.airplaneType.id,
+    };
+    return this.http.put(`${this.airplanesUrl}/${id}`, updateAirplane);
   }
 
-  deleteAirplane(airplaneId: number): Observable<{}> {
-    return this.http.delete(this.airplanesUrl + `/${airplaneId}`);
+  deleteAirplane(id: number): Observable<{}> {
+    return this.http.delete(`${this.airplanesUrl}/${id}`);
   }
 }
