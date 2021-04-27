@@ -11,12 +11,30 @@ import { Route } from '../../../models/Route';
 import { Airport } from '../../../models/Airport';
 import { Airplane } from '../../../models/Airplane';
 import { AirplaneType } from '../../../models/AirplaneType';
+import { By } from '@angular/platform-browser';
+import { DatePipe } from '@angular/common';
+import createSpy = jasmine.createSpy;
+
+const flight = new Flight(
+  1,
+  new Route(
+    2,
+    new Airport('SFO', 'San Francisco', [], []),
+    new Airport('LAX', 'Los Angeles', [], []),
+    []
+  ),
+  new Airplane(3, new AirplaneType(2, 200, []), []),
+  new Date(),
+  4,
+  19.99,
+  []
+);
 
 describe('FlightDetailsComponent', () => {
   let component: FlightDetailsComponent;
   let fixture: ComponentFixture<FlightDetailsComponent>;
   const mockDialogRef = {
-    close: jasmine.createSpy('close'),
+    close: createSpy('close'),
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -30,20 +48,7 @@ describe('FlightDetailsComponent', () => {
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
-            flight: new Flight(
-              1,
-              new Route(
-                1,
-                new Airport('LAX', 'Los Angeles', [], []),
-                new Airport('JFK', 'New York City', [], []),
-                []
-              ),
-              new Airplane(1, new AirplaneType(3, 4, []), []),
-              new Date(),
-              2,
-              9.99,
-              []
-            ),
+            flight,
           },
         },
       ],
@@ -56,7 +61,62 @@ describe('FlightDetailsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should display flight id', () => {
+    const de = fixture.debugElement.query(By.css('ul > li'));
+    const el: HTMLElement = de.nativeElement;
+    expect(el.innerText).toContain(flight.id.toString());
+  });
+  it('should display flight origin airport', () => {
+    const de = fixture.debugElement.query(By.css('ul > li ~ li'));
+    const el: HTMLElement = de.nativeElement;
+    expect(el.innerText).toContain(flight.route.originAirport.iataId);
+  });
+  it('should display flight destination airport', () => {
+    const de = fixture.debugElement.query(By.css('ul > li ~ li ~ li'));
+    const el: HTMLElement = de.nativeElement;
+    expect(el.innerText).toContain(flight.route.destinationAirport.iataId);
+  });
+  it('should display flight airplane', () => {
+    const de = fixture.debugElement.query(By.css('ul > li ~ li ~ li ~ li'));
+    const el: HTMLElement = de.nativeElement;
+    expect(el.innerText).toContain(flight.airplane.id.toString());
+  });
+  it('should display flight departure', () => {
+    const de = fixture.debugElement.query(
+      By.css('ul > li ~ li ~ li ~ li ~ li')
+    );
+    const el: HTMLElement = de.nativeElement;
+    const pipe = new DatePipe('en-US');
+    const transformed =
+      pipe.transform(flight.departureTime, 'long') ||
+      flight.departureTime.toISOString();
+    expect(el.innerText).toContain(transformed);
+  });
+  it('should display flight reserved seats', () => {
+    const de = fixture.debugElement.query(
+      By.css('ul > li ~ li ~ li ~ li ~ li ~ li')
+    );
+    const el: HTMLElement = de.nativeElement;
+    expect(el.innerText).toContain(flight.reservedSeats.toString());
+  });
+  it('should display flight seat price', () => {
+    const de = fixture.debugElement.query(
+      By.css('ul > li ~ li ~ li ~ li ~ li ~ li ~ li')
+    );
+    const el: HTMLElement = de.nativeElement;
+    expect(el.innerText).toContain(flight.seatPrice.toFixed(2));
+  });
+  it('should display flight bookings', () => {
+    const de = fixture.debugElement.query(
+      By.css('ul > li ~ li ~ li ~ li ~ li ~ li ~ li ~ li')
+    );
+    const el: HTMLElement = de.nativeElement;
+    expect(el.innerText).toContain(flight.bookings.length.toString());
+  });
+
+  it('should close the dialog when clicking on the close button', () => {
+    const de = fixture.debugElement.query(By.css('button'));
+    de.triggerEventHandler('click', null);
+    expect(mockDialogRef.close).toHaveBeenCalledWith('close');
   });
 });
