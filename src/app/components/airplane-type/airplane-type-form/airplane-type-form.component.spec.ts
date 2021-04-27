@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AirplaneTypeFormComponent } from './airplane-type-form.component';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {
   MatError,
   MatFormField,
@@ -11,15 +10,11 @@ import {
   MatLabel,
 } from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import {
-  BrowserAnimationsModule,
-  NoopAnimationsModule,
-} from '@angular/platform-browser/animations';
-import createSpy = jasmine.createSpy;
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { AirplaneType } from '../../../models/AirplaneType';
 import { Airplane } from '../../../models/Airplane';
+import createSpy = jasmine.createSpy;
 
 const airplaneType = new AirplaneType(2, 33, []);
 const airplane = new Airplane(1, airplaneType, []);

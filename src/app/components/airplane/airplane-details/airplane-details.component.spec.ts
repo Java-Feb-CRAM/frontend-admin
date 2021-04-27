@@ -4,11 +4,11 @@ import { AirplaneDetailsComponent } from './airplane-details.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Airplane } from '../../../models/Airplane';
 import { AirplaneType } from '../../../models/AirplaneType';
-import createSpy = jasmine.createSpy;
 import { By } from '@angular/platform-browser';
 import { Flight } from '../../../models/Flight';
 import { Airport } from '../../../models/Airport';
 import { Route } from '../../../models/Route';
+import createSpy = jasmine.createSpy;
 
 const flight = new Flight(
   23,

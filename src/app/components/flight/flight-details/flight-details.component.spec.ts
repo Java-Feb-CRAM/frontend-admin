@@ -11,9 +11,9 @@ import { Route } from '../../../models/Route';
 import { Airport } from '../../../models/Airport';
 import { Airplane } from '../../../models/Airplane';
 import { AirplaneType } from '../../../models/AirplaneType';
-import createSpy = jasmine.createSpy;
 import { By } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
+import createSpy = jasmine.createSpy;
 
 const flight = new Flight(
   1,

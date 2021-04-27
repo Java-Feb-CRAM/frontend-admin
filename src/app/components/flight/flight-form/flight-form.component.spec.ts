@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FlightFormComponent } from './flight-form.component';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {
   MatError,
   MatFormField,
@@ -12,10 +11,7 @@ import {
 } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
-import {
-  BrowserAnimationsModule,
-  NoopAnimationsModule,
-} from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatDatepicker,
   MatDatepickerModule,
@@ -25,7 +21,6 @@ import {
   NgxMaterialTimepickerModule,
 } from 'ngx-material-timepicker';
 import { MatNativeDateModule, MatOption } from '@angular/material/core';
-import createSpy = jasmine.createSpy;
 import { Observable, of } from 'rxjs';
 import { Route } from '../../../models/Route';
 import { Airplane } from '../../../models/Airplane';
@@ -35,7 +30,7 @@ import { RouteService } from '../../../services/route.service';
 import { AirplaneService } from '../../../services/airplane.service';
 import { By } from '@angular/platform-browser';
 import { Flight } from '../../../models/Flight';
-import objectContaining = jasmine.objectContaining;
+import createSpy = jasmine.createSpy;
 
 const route = new Route(
   1,

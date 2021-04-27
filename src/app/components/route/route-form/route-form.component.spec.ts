@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouteFormComponent } from './route-form.component';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {
   MatError,
   MatFormField,
@@ -12,19 +11,14 @@ import {
 } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
-import {
-  BrowserAnimationsModule,
-  NoopAnimationsModule,
-} from '@angular/platform-browser/animations';
-import createSpy = jasmine.createSpy;
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable, of } from 'rxjs';
 import { Airport } from '../../../models/Airport';
 import { AirportService } from '../../../services/airport.service';
 import { MatOption } from '@angular/material/core';
 import { By } from '@angular/platform-browser';
 import { Route } from '../../../models/Route';
-import { Airplane } from '../../../models/Airplane';
-import { AirplaneType } from '../../../models/AirplaneType';
+import createSpy = jasmine.createSpy;
 
 const airportLAX = new Airport('LAX', 'Los Angeles', [], []);
 const airportSFO = new Airport('SFO', 'San Francisco', [], []);

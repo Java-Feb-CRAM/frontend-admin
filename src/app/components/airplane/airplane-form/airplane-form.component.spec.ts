@@ -1,35 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {
-  AirplaneFormComponent,
-  AirplaneFormData,
-} from './airplane-form.component';
+import { AirplaneFormComponent } from './airplane-form.component';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
   MatError,
   MatFormField,
   MatFormFieldModule,
   MatLabel,
 } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
-import {
-  BrowserAnimationsModule,
-  NoopAnimationsModule,
-} from '@angular/platform-browser/animations';
-import createSpy = jasmine.createSpy;
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AirplaneTypeService } from '../../../services/airplane-type.service';
 import { Observable, of } from 'rxjs';
 import { AirplaneType } from '../../../models/AirplaneType';
 import { Airplane } from '../../../models/Airplane';
 import { MatOption } from '@angular/material/core';
 import { By } from '@angular/platform-browser';
+import createSpy = jasmine.createSpy;
 
 const airplaneType = new AirplaneType(2, 33, []);
 const airplane = new Airplane(1, airplaneType, []);

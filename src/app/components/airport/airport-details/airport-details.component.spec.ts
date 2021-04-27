@@ -3,12 +3,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AirportDetailsComponent } from './airport-details.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Airport } from '../../../models/Airport';
-import createSpy = jasmine.createSpy;
 import { Route } from '../../../models/Route';
 import { By } from '@angular/platform-browser';
 import { Airplane } from '../../../models/Airplane';
 import { AirplaneType } from '../../../models/AirplaneType';
 import { Flight } from '../../../models/Flight';
+import createSpy = jasmine.createSpy;
 
 const flight = new Flight(
   1,

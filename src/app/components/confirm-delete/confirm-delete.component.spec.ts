@@ -2,9 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfirmDeleteComponent } from './confirm-delete.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import createSpy = jasmine.createSpy;
 import { By } from '@angular/platform-browser';
-import { B } from '@angular/cdk/keycodes';
+import createSpy = jasmine.createSpy;
 
 describe('ConfirmDeleteComponent', () => {
   let component: ConfirmDeleteComponent;

@@ -1,16 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AirplanesPageComponent } from './airplanes-page.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AirplaneTableComponent } from '../../components/airplane/airplane-table/airplane-table.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
 import { Airplane } from '../../models/Airplane';
 import { AirplaneType } from '../../models/AirplaneType';
 import { Observable, of } from 'rxjs';
@@ -18,7 +10,6 @@ import { ComponentType } from '@angular/cdk/overlay';
 import { AirplaneService } from '../../services/airplane.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { AirplaneTypeTableComponent } from '../../components/airplane-type/airplane-type-table/airplane-type-table.component';
 import { TableEventType } from '../../interfaces/TableEventType';
 
 const airplane = new Airplane(1, new AirplaneType(3, 4, []), []);

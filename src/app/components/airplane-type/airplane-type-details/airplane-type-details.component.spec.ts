@@ -1,19 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AirplaneTypeDetailsComponent } from './airplane-type-details.component';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AirplaneType } from '../../../models/AirplaneType';
-import { Flight } from '../../../models/Flight';
-import { Route } from '../../../models/Route';
-import { Airport } from '../../../models/Airport';
 import { Airplane } from '../../../models/Airplane';
-import createSpy = jasmine.createSpy;
 import { By } from '@angular/platform-browser';
-import { B } from '@angular/cdk/keycodes';
+import createSpy = jasmine.createSpy;
 
 const airplane = new Airplane(2, new AirplaneType(1, 45, []), []);
 const airplaneType = new AirplaneType(4, 23, [airplane]);

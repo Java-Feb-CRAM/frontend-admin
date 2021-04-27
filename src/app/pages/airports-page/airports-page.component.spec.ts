@@ -1,24 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AirportsPageComponent } from './airports-page.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AirportTableComponent } from '../../components/airport/airport-table/airport-table.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
-import { AirplaneType } from '../../models/AirplaneType';
 import { Observable, of } from 'rxjs';
 import { ComponentType } from '@angular/cdk/overlay';
 import { Airport } from '../../models/Airport';
 import { AirportService } from '../../services/airport.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { AirplaneTypeTableComponent } from '../../components/airplane-type/airplane-type-table/airplane-type-table.component';
 import { TableEventType } from '../../interfaces/TableEventType';
 
 const airport = new Airport('IAH', 'Houston', [], []);

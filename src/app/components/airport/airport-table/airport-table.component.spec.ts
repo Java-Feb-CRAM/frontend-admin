@@ -3,10 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AirportTableComponent } from './airport-table.component';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import {
-  BrowserAnimationsModule,
-  NoopAnimationsModule,
-} from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatFormField,
   MatFormFieldModule,
@@ -19,9 +16,6 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { Airport } from '../../../models/Airport';
 import { By } from '@angular/platform-browser';
 import { TableEventType } from '../../../interfaces/TableEventType';
-import { Airplane } from '../../../models/Airplane';
-import { AirplaneType } from '../../../models/AirplaneType';
-import { Flight } from '../../../models/Flight';
 import { Route } from '../../../models/Route';
 
 const airports = [new Airport('IAH', 'Houston', [], [])];

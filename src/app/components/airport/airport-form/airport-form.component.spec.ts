@@ -2,12 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AirportFormComponent } from './airport-form.component';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
   MatError,
   MatFormField,
@@ -15,16 +10,10 @@ import {
   MatLabel,
 } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
-import {
-  BrowserAnimationsModule,
-  NoopAnimationsModule,
-} from '@angular/platform-browser/animations';
-import createSpy = jasmine.createSpy;
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { Airplane } from '../../../models/Airplane';
-import { AirplaneType } from '../../../models/AirplaneType';
 import { Airport } from '../../../models/Airport';
+import createSpy = jasmine.createSpy;
 
 const airport = new Airport('IAH', 'Houston', [], []);
 

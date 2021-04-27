@@ -8,14 +8,12 @@ import {
   MatToolbarRow,
 } from '@angular/material/toolbar';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { RouterTestingModule } from '@angular/router/testing';
-import { MatListModule, MatNavList } from '@angular/material/list';
+import { MatNavList } from '@angular/material/list';
 import { UserService } from '../../../services/user.service';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 import { MatButton, MatButtonModule } from '@angular/material/button';
-import { B } from '@angular/cdk/keycodes';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatMenuHarness } from '@angular/material/menu/testing';
