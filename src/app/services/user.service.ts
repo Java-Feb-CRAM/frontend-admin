@@ -46,7 +46,7 @@ export class UserService {
   loginUri: string;
   registrationUri: string;
 
-  login(credentials: Object): void {
+  login(credentials: object): void {
     this.http.post<LoginResponse>(this.loginUri, credentials).subscribe({
       next: (response) => {
         this.setJwt(response.authenticatedJwt);

@@ -52,6 +52,8 @@ import { RouteFormComponent } from './components/route/route-form/route-form.com
 import { RouteTableComponent } from './components/route/route-table/route-table.component';
 import { FlightDetailsComponent } from './components/flight/flight-details/flight-details.component';
 import { FlightsPageComponent } from './pages/flights-page/flights-page.component';
+import { LoadingButtonComponent } from './components/loading-button/loading-button.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -83,6 +85,7 @@ import { FlightsPageComponent } from './pages/flights-page/flights-page.componen
     RouteTableComponent,
     FlightDetailsComponent,
     FlightsPageComponent,
+    LoadingButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,6 +113,7 @@ import { FlightsPageComponent } from './pages/flights-page/flights-page.componen
     MatDatepickerModule,
     NgxMaterialTimepickerModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {
