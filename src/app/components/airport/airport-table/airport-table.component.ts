@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -23,7 +24,7 @@ export interface AirportTableEvent {
   templateUrl: './airport-table.component.html',
   styleUrls: ['./airport-table.component.scss'],
 })
-export class AirportTableComponent implements OnChanges {
+export class AirportTableComponent implements OnChanges, AfterViewInit {
   @Input() airports: Airport[] = [];
   dataSource = new MatTableDataSource<Airport>(this.airports);
   @Output() airportTableEvent = new EventEmitter<AirportTableEvent>();
@@ -44,9 +45,32 @@ export class AirportTableComponent implements OnChanges {
   }
 
   // @ts-ignore
-  @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatTable) table: MatTable<Airport>;
 
   TableEventType = TableEventType;
+
+  ngAfterViewInit(): void {
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'iataId':
+          return item.iataId;
+        case 'city':
+          return item.city.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        default:
+          // @ts-ignore
+          return item[property];
+      }
+    };
+    this.dataSource.filterPredicate = (data, filter) => {
+      if (data.iataId.toLowerCase().includes(filter.toLowerCase())) {
+        return true;
+      }
+      if (data.city.toLowerCase().includes(filter.toLowerCase())) {
+        return true;
+      }
+      return false;
+    };
+  }
 
   onType(): void {
     this.dataSource.filter = this.filterString;
@@ -54,7 +78,6 @@ export class AirportTableComponent implements OnChanges {
 
   update(): void {
     this.dataSource.data = this.airports;
-    this.table?.renderRows();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

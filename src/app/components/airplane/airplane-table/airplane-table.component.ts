@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -23,7 +24,7 @@ export interface AirplaneTableEvent {
   templateUrl: './airplane-table.component.html',
   styleUrls: ['./airplane-table.component.scss'],
 })
-export class AirplaneTableComponent implements OnChanges {
+export class AirplaneTableComponent implements OnChanges, AfterViewInit {
   @Input() airplanes: Airplane[] = [];
   dataSource = new MatTableDataSource<Airplane>(this.airplanes);
   @Output() airplaneTableEvent = new EventEmitter<AirplaneTableEvent>();
@@ -44,9 +45,32 @@ export class AirplaneTableComponent implements OnChanges {
   }
 
   // @ts-ignore
-  @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatTable) table: MatTable<Airplane>;
 
   TableEventType = TableEventType;
+
+  ngAfterViewInit(): void {
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'id':
+          return item.id;
+        case 'airplaneType':
+          return item.airplaneType.id;
+        default:
+          // @ts-ignore
+          return item[property];
+      }
+    };
+    this.dataSource.filterPredicate = (data, filter) => {
+      if (filter.includes(data.id.toString())) {
+        return true;
+      }
+      if (filter.includes(data.airplaneType.id.toString())) {
+        return true;
+      }
+      return false;
+    };
+  }
 
   onType(): void {
     this.dataSource.filter = this.filterString;
