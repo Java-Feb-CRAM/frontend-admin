@@ -83,8 +83,8 @@ export class UserService {
           return this.router.parseUrl('/login');
         }
       }),
-      catchError(() => {
-        return of(false);
+      catchError((err) => {
+        return of(this.router.parseUrl('/login'));
       })
     );
   }
