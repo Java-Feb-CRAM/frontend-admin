@@ -54,6 +54,7 @@ import { FlightDetailsComponent } from './components/flight/flight-details/fligh
 import { FlightsPageComponent } from './pages/flights-page/flights-page.component';
 import { LoadingButtonComponent } from './components/loading-button/loading-button.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     NgxMaterialTimepickerModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
+    MatCardModule,
   ],
   providers: [
     {
