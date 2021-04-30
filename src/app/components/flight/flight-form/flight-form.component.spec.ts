@@ -30,6 +30,7 @@ import { RouteService } from '../../../services/route.service';
 import { AirplaneService } from '../../../services/airplane.service';
 import { By } from '@angular/platform-browser';
 import { Flight } from '../../../models/Flight';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import createSpy = jasmine.createSpy;
 
 const route = new Route(
@@ -71,6 +72,7 @@ describe('FlightFormComponent', () => {
         MatOption,
         MatDatepicker,
         NgxMaterialTimepickerComponent,
+        MatButton,
       ],
       providers: [
         FormBuilder,
@@ -100,6 +102,7 @@ describe('FlightFormComponent', () => {
         MatNativeDateModule,
         MatDatepickerModule,
         NgxMaterialTimepickerModule,
+        MatButtonModule,
       ],
     }).compileComponents();
   });

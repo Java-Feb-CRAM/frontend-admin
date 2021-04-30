@@ -18,6 +18,7 @@ import { AirportService } from '../../../services/airport.service';
 import { MatOption } from '@angular/material/core';
 import { By } from '@angular/platform-browser';
 import { Route } from '../../../models/Route';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import createSpy = jasmine.createSpy;
 
 const airportLAX = new Airport('LAX', 'Los Angeles', [], []);
@@ -46,6 +47,7 @@ describe('RouteFormComponent', () => {
         MatSelect,
         MatOption,
         MatError,
+        MatButton,
       ],
       providers: [
         FormBuilder,
@@ -68,6 +70,7 @@ describe('RouteFormComponent', () => {
         MatFormFieldModule,
         MatSelectModule,
         MatInputModule,
+        MatButtonModule,
       ],
     }).compileComponents();
   });

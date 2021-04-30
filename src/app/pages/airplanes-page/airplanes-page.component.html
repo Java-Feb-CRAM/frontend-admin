@@ -1,5 +1,13 @@
+<mat-spinner
+  *ngIf="loading"
+  style="margin-top: 100px; margin-left: auto; margin-right: auto"
+></mat-spinner>
 <app-airplane-table
+  *ngIf="!loading && !error"
   [airplanes]="airplanes"
   (airplaneTableEvent)="handleTableEvent($event)"
   (addEvent)="showCreateForm($event)"
 ></app-airplane-table>
+<p style="margin-top: 100px" *ngIf="!loading && error">
+  Unable to load airplanes. Please try again later.
+</p>

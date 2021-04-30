@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from '../../components/confirm-delete/confirm-delete.component';
 import { AirportFormComponent } from '../../components/airport/airport-form/airport-form.component';
 import { AirportDetailsComponent } from '../../components/airport/airport-details/airport-details.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-airports-page',
@@ -19,15 +20,32 @@ import { AirportDetailsComponent } from '../../components/airport/airport-detail
 export class AirportsPageComponent implements OnInit {
   airports: Airport[] = [];
   @ViewChild(AirportTableComponent) table: AirportTableComponent | null = null;
+  loading = true;
+  error = false;
 
   constructor(
     private readonly airportService: AirportService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.airportService.getAllAirports().subscribe((data) => {
-      this.airports = data;
+    this.airportService.getAllAirports().subscribe(
+      (data) => {
+        this.airports = data;
+        this.loading = false;
+      },
+      (err) => {
+        this.loading = false;
+        this.error = true;
+      }
+    );
+  }
+
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 20 * 1000,
+      verticalPosition: 'top',
     });
   }
 
@@ -70,11 +88,18 @@ export class AirportsPageComponent implements OnInit {
       });
       updateDialog.afterClosed().subscribe((result) => {
         if (result instanceof Airport) {
-          this.airportService.updateAirport(iataId, result).subscribe(() => {
-            const index = this.airports.findIndex((a) => a.iataId === iataId);
-            this.airports[index] = result;
-            this.table?.update();
-          });
+          this.airportService.updateAirport(iataId, result).subscribe(
+            () => {
+              this.openSnackBar('✅ Airport updated', 'Close');
+              const index = this.airports.findIndex((a) => a.iataId === iataId);
+              this.airports[index] = result;
+              this.table?.update();
+            },
+            (err) => {
+              const error = err.error.message || 'Unable to update Airport';
+              this.openSnackBar(`❌ ${error}`, 'Close');
+            }
+          );
         }
       });
     }
@@ -86,13 +111,20 @@ export class AirportsPageComponent implements OnInit {
       const createDialog = this.dialog.open(AirportFormComponent, {});
       createDialog.afterClosed().subscribe((result) => {
         if (result instanceof Airport) {
-          this.airportService.createAirport(result).subscribe((data) => {
-            this.airports.push(data);
-            this.airports = [...this.airports].sort((a, b) =>
-              b.iataId.localeCompare(a.iataId)
-            );
-            this.table?.update();
-          });
+          this.airportService.createAirport(result).subscribe(
+            (data) => {
+              this.openSnackBar('✅ Airport created', 'Close');
+              this.airports.push(data);
+              this.airports = [...this.airports].sort((a, b) =>
+                b.iataId.localeCompare(a.iataId)
+              );
+              this.table?.update();
+            },
+            (err) => {
+              const error = err.error.message || 'Unable to create Airport';
+              this.openSnackBar(`❌ ${error}`, 'Close');
+            }
+          );
         }
       });
     }
@@ -107,11 +139,18 @@ export class AirportsPageComponent implements OnInit {
     });
     confirmDeleteDialog.afterClosed().subscribe((result) => {
       if (result === 'delete') {
-        this.airportService.deleteAirport(iataId).subscribe(() => {
-          this.airports = this.airports.filter(
-            (airport) => airport.iataId !== iataId
-          );
-        });
+        this.airportService.deleteAirport(iataId).subscribe(
+          () => {
+            this.openSnackBar('✅ Airport deleted', 'Close');
+            this.airports = this.airports.filter(
+              (airport) => airport.iataId !== iataId
+            );
+          },
+          (err) => {
+            const error = err.error.message || 'Unable to delete Airport';
+            this.openSnackBar(`❌ ${error}`, 'Close');
+          }
+        );
       }
     });
   }

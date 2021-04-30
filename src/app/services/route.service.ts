@@ -47,9 +47,6 @@ export class RouteService {
           data.destinationAirport,
           []
         );
-      }),
-      catchError((error) => {
-        return throwError('Something went wrong!');
       })
     );
   }

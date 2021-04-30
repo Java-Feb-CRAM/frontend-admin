@@ -8,6 +8,7 @@ import { By } from '@angular/platform-browser';
 import { Flight } from '../../../models/Flight';
 import { Airport } from '../../../models/Airport';
 import { Route } from '../../../models/Route';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import createSpy = jasmine.createSpy;
 
 const flight = new Flight(
@@ -34,7 +35,7 @@ describe('AirplaneDetailsComponent', () => {
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AirplaneDetailsComponent],
+      declarations: [AirplaneDetailsComponent, MatButton],
       providers: [
         {
           provide: MatDialogRef,
@@ -47,6 +48,7 @@ describe('AirplaneDetailsComponent', () => {
           },
         },
       ],
+      imports: [MatButtonModule],
     }).compileComponents();
   });
 

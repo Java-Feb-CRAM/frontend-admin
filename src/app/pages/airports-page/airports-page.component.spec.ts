@@ -10,6 +10,7 @@ import { AirportService } from '../../services/airport.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TableEventType } from '../../interfaces/TableEventType';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 const airport = new Airport('IAH', 'Houston', [], []);
 
@@ -58,7 +59,9 @@ describe('AirportsPageComponent', () => {
           provide: MatDialog,
           useClass: MatDialogStub,
         },
+        MatSnackBar,
       ],
+      imports: [MatSnackBarModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });

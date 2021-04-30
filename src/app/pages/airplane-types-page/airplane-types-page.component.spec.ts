@@ -10,6 +10,7 @@ import { ComponentType } from '@angular/cdk/overlay';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TableEventType } from '../../interfaces/TableEventType';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 const airplaneType = new AirplaneType(1, 2, []);
 
@@ -58,7 +59,9 @@ describe('AirplaneTypesPageComponent', () => {
           provide: MatDialog,
           useClass: MatDialogStub,
         },
+        MatSnackBar,
       ],
+      imports: [MatSnackBarModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });

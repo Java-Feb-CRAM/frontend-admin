@@ -1,5 +1,13 @@
+<mat-spinner
+  style="margin-top: 100px; margin-left: auto; margin-right: auto"
+  *ngIf="loading"
+></mat-spinner>
 <app-airport-table
+  *ngIf="!loading && !error"
   [airports]="airports"
   (airportTableEvent)="handleTableEvent($event)"
   (addEvent)="showCreateForm($event)"
 ></app-airport-table>
+<p style="margin-top: 100px" *ngIf="!loading && error">
+  Unable to load airports. Please try again later.
+</p>

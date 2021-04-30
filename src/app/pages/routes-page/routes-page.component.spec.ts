@@ -11,6 +11,7 @@ import { RouteService } from '../../services/route.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TableEventType } from '../../interfaces/TableEventType';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 const route = new Route(
   1,
@@ -64,7 +65,9 @@ describe('RoutesPageComponent', () => {
           provide: MatDialog,
           useClass: MatDialogStub,
         },
+        MatSnackBar,
       ],
+      imports: [MatSnackBarModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });

@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -23,7 +24,7 @@ export interface RouteTableEvent {
   templateUrl: './route-table.component.html',
   styleUrls: ['./route-table.component.scss'],
 })
-export class RouteTableComponent implements OnChanges {
+export class RouteTableComponent implements OnChanges, AfterViewInit {
   @Input() routes: Route[] = [];
   dataSource = new MatTableDataSource<Route>(this.routes);
   @Output() routeTableEvent = new EventEmitter<RouteTableEvent>();
@@ -44,9 +45,42 @@ export class RouteTableComponent implements OnChanges {
   }
 
   // @ts-ignore
-  @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatTable) table: MatTable<Route>;
 
   TableEventType = TableEventType;
+  ngAfterViewInit(): void {
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'id':
+          return item.id;
+        case 'origin':
+          return item.originAirport.iataId;
+        case 'destination':
+          return item.destinationAirport.iataId;
+        default:
+          // @ts-ignore
+          return item[property];
+      }
+    };
+    this.dataSource.filterPredicate = (data, filter) => {
+      if (filter.includes(data.id.toString())) {
+        return true;
+      }
+      if (
+        data.originAirport.iataId.toLowerCase().includes(filter.toLowerCase())
+      ) {
+        return true;
+      }
+      if (
+        data.destinationAirport.iataId
+          .toLowerCase()
+          .includes(filter.toLowerCase())
+      ) {
+        return true;
+      }
+      return false;
+    };
+  }
 
   onType(): void {
     this.dataSource.filter = this.filterString;
