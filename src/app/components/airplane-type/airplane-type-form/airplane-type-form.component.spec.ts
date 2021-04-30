@@ -14,6 +14,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { AirplaneType } from '../../../models/AirplaneType';
 import { Airplane } from '../../../models/Airplane';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import createSpy = jasmine.createSpy;
 
 const airplaneType = new AirplaneType(2, 33, []);
@@ -33,6 +34,7 @@ describe('AirplaneTypeFormComponent', () => {
         MatLabel,
         MatError,
         MatInput,
+        MatButton,
       ],
       providers: [
         FormBuilder,
@@ -50,6 +52,7 @@ describe('AirplaneTypeFormComponent', () => {
         NoopAnimationsModule,
         MatFormFieldModule,
         MatInputModule,
+        MatButtonModule,
       ],
     }).compileComponents();
   });

@@ -46,17 +46,14 @@ export class UserService {
   loginUri: string;
   registrationUri: string;
 
-  login(credentials: Object): void {
-    this.http.post<LoginResponse>(this.loginUri, credentials).subscribe({
-      next: (response) => {
-        this.setJwt(response.authenticatedJwt);
-        this.loginLogoutChange.next(true);
-        this.router.navigate([''], { replaceUrl: true });
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
+  login(credentials: object): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.loginUri, credentials);
+  }
+
+  postLogin(response: LoginResponse): void {
+    this.setJwt(response.authenticatedJwt);
+    this.loginLogoutChange.next(true);
+    this.router.navigate([''], { replaceUrl: true });
   }
 
   logout(): void {
@@ -83,8 +80,8 @@ export class UserService {
           return this.router.parseUrl('/login');
         }
       }),
-      catchError(() => {
-        return of(false);
+      catchError((err) => {
+        return of(this.router.parseUrl('/login'));
       })
     );
   }

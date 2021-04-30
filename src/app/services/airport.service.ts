@@ -38,9 +38,6 @@ export class AirportService {
     return this.http.post<Airport>(this.airportsUrl, airport).pipe(
       map((data: Airport) => {
         return new Airport(data.iataId, data.city, [], []);
-      }),
-      catchError((error) => {
-        return throwError('Something went wrong!');
       })
     );
   }

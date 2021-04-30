@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CredentialsDto } from '../../../models/CredentialsDto';
 import { UserService } from 'src/app/services/user.service';
+import { LoadingButtonComponent } from '../../loading-button/loading-button.component';
 
 export interface LoginFormData {
   credentialsDto?: CredentialsDto;
@@ -13,6 +14,10 @@ export interface LoginFormData {
   styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent {
+  // @ts-ignore
+  @ViewChild(LoadingButtonComponent) loadingButton: LoadingButtonComponent;
+  errorMessage: string | null = null;
+
   loginForm = this.fb.group({
     username: [
       '',
@@ -39,11 +44,23 @@ export class LoginFormComponent {
   }
 
   onSubmit(): void {
-    this.userService.login(
-      new CredentialsDto(
-        this.loginForm.controls.username.value,
-        this.loginForm.controls.password.value
+    this.errorMessage = null;
+    this.userService
+      .login(
+        new CredentialsDto(
+          this.loginForm.controls.username.value,
+          this.loginForm.controls.password.value
+        )
       )
-    );
+      .subscribe(
+        (response) => {
+          this.userService.postLogin(response);
+        },
+        (err) => {
+          this.loadingButton.loading = false;
+          this.errorMessage =
+            err.error.message || 'An error occurred, please try again later.';
+        }
+      );
   }
 }

@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -12,6 +13,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { TableEventType } from '../../../interfaces/TableEventType';
 import { Flight } from '../../../models/Flight';
+import { DatePipe } from '@angular/common';
 
 export interface FlightTableEvent {
   id: number;
@@ -23,7 +25,7 @@ export interface FlightTableEvent {
   templateUrl: './flight-table.component.html',
   styleUrls: ['./flight-table.component.scss'],
 })
-export class FlightTableComponent implements OnChanges {
+export class FlightTableComponent implements OnChanges, AfterViewInit {
   @Input() flights: Flight[] = [];
   dataSource = new MatTableDataSource<Flight>(this.flights);
   @Output() flightTableEvent = new EventEmitter<FlightTableEvent>();
@@ -51,9 +53,62 @@ export class FlightTableComponent implements OnChanges {
     }
   }
   // @ts-ignore
-  @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatTable) table: MatTable<Flight>;
 
   TableEventType = TableEventType;
+
+  ngAfterViewInit(): void {
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'id':
+          return item.id;
+        case 'route':
+          return (
+            item.route.originAirport.iataId +
+            ' ' +
+            item.route.destinationAirport.iataId
+          );
+        case 'airplane':
+          return item.airplane.id;
+        case 'departureTime':
+          return item.departureTime;
+        case 'reservedSeats':
+          return item.reservedSeats;
+        case 'seatPrice':
+          return item.seatPrice;
+        default:
+          // @ts-ignore
+          return item[property];
+      }
+    };
+    const pipe = new DatePipe('en-US');
+    this.dataSource.filterPredicate = (data, filter) => {
+      if (filter.includes(data.id.toString())) {
+        return true;
+      }
+      if (filter.includes(data.airplane.id.toString())) {
+        return true;
+      }
+      if (filter.includes(data.reservedSeats.toString())) {
+        return true;
+      }
+      if (data.seatPrice.toString().includes(filter)) {
+        return true;
+      }
+      const short = pipe.transform(data.departureTime, 'short');
+      if (short?.includes(filter)) {
+        return true;
+      }
+      const combined =
+        data.route.originAirport.iataId +
+        ' ' +
+        data.route.destinationAirport.iataId;
+      if (combined.toLowerCase().includes(filter.toLowerCase())) {
+        return true;
+      }
+      return false;
+    };
+  }
 
   onType(): void {
     this.dataSource.filter = this.filterString;

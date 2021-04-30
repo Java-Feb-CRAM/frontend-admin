@@ -1,5 +1,13 @@
+<mat-spinner
+  style="margin-top: 100px; margin-left: auto; margin-right: auto"
+  *ngIf="loading"
+></mat-spinner>
 <app-route-table
+  *ngIf="!loading && !error"
   [routes]="routes"
   (routeTableEvent)="handleTableEvent($event)"
   (addEvent)="showCreateForm($event)"
 ></app-route-table>
+<p style="margin-top: 100px" *ngIf="!loading && error">
+  Unable to load routes. Please try again later.
+</p>

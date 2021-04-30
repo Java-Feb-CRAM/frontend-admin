@@ -17,6 +17,7 @@ import { AirplaneType } from '../../../models/AirplaneType';
 import { Airplane } from '../../../models/Airplane';
 import { MatOption } from '@angular/material/core';
 import { By } from '@angular/platform-browser';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import createSpy = jasmine.createSpy;
 
 const airplaneType = new AirplaneType(2, 33, []);
@@ -43,6 +44,7 @@ describe('AirplaneFormComponent', () => {
         MatSelect,
         MatOption,
         MatError,
+        MatButton,
       ],
       providers: [
         FormBuilder,
@@ -64,6 +66,7 @@ describe('AirplaneFormComponent', () => {
         ReactiveFormsModule,
         MatFormFieldModule,
         MatSelectModule,
+        MatButtonModule,
       ],
     }).compileComponents();
   });

@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { Airport } from '../../../models/Airport';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import createSpy = jasmine.createSpy;
 
 const airport = new Airport('IAH', 'Houston', [], []);
@@ -25,7 +26,13 @@ describe('AirportFormComponent', () => {
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AirportFormComponent, MatFormField, MatLabel, MatError],
+      declarations: [
+        AirportFormComponent,
+        MatFormField,
+        MatLabel,
+        MatError,
+        MatButton,
+      ],
       providers: [
         FormBuilder,
         {
@@ -42,6 +49,7 @@ describe('AirportFormComponent', () => {
         NoopAnimationsModule,
         MatFormFieldModule,
         MatInputModule,
+        MatButtonModule,
       ],
     }).compileComponents();
   });
