@@ -39,9 +39,6 @@ export class AirplaneService {
     return this.http.post<Airplane>(this.airplanesUrl, createAirplane).pipe(
       map((data: Airplane) => {
         return new Airplane(data.id, data.airplaneType, []);
-      }),
-      catchError((error) => {
-        return throwError('Something went wrong!');
       })
     );
   }

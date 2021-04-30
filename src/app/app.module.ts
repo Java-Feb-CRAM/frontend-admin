@@ -55,6 +55,7 @@ import { FlightsPageComponent } from './pages/flights-page/flights-page.componen
 import { LoadingButtonComponent } from './components/loading-button/loading-button.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import { MatCardModule } from '@angular/material/card';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatSnackBarModule,
   ],
   providers: [
     {

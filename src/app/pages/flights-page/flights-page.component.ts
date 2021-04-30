@@ -10,6 +10,7 @@ import { TableEventType } from '../../interfaces/TableEventType';
 import { FlightDetailsComponent } from '../../components/flight/flight-details/flight-details.component';
 import { FlightFormComponent } from '../../components/flight/flight-form/flight-form.component';
 import { ConfirmDeleteComponent } from '../../components/confirm-delete/confirm-delete.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-flights-page',
@@ -24,7 +25,8 @@ export class FlightsPageComponent implements OnInit {
 
   constructor(
     private readonly flightService: FlightService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +40,13 @@ export class FlightsPageComponent implements OnInit {
         this.error = true;
       }
     );
+  }
+
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 20 * 1000,
+      verticalPosition: 'top',
+    });
   }
 
   findFlightById(id: number): Flight | undefined {
@@ -79,11 +88,18 @@ export class FlightsPageComponent implements OnInit {
       });
       updateDialog.afterClosed().subscribe((result) => {
         if (result instanceof Flight) {
-          this.flightService.updateFlight(id, result).subscribe(() => {
-            const index = this.flights.findIndex((f) => f.id === id);
-            this.flights[index] = result;
-            this.table?.update();
-          });
+          this.flightService.updateFlight(id, result).subscribe(
+            () => {
+              this.openSnackBar('✅ Flight updated', 'Close');
+              const index = this.flights.findIndex((f) => f.id === id);
+              this.flights[index] = result;
+              this.table?.update();
+            },
+            (err) => {
+              const error = err.error.message || 'Unable to update Flight';
+              this.openSnackBar(`❌ ${error}`, 'Close');
+            }
+          );
         }
       });
     }
@@ -94,19 +110,26 @@ export class FlightsPageComponent implements OnInit {
       const createDialog = this.dialog.open(FlightFormComponent, {});
       createDialog.afterClosed().subscribe((result) => {
         if (result instanceof Flight) {
-          this.flightService.createFlight(result).subscribe((data) => {
-            this.flights.push(data);
-            this.flights = [...this.flights].sort((a, b) => {
-              if (a.id < b.id) {
-                return -1;
-              } else if (a.id > b.id) {
-                return 1;
-              } else {
-                return 0;
-              }
-            });
-            this.table?.update();
-          });
+          this.flightService.createFlight(result).subscribe(
+            (data) => {
+              this.openSnackBar('✅ Flight created', 'Close');
+              this.flights.push(data);
+              this.flights = [...this.flights].sort((a, b) => {
+                if (a.id < b.id) {
+                  return -1;
+                } else if (a.id > b.id) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              });
+              this.table?.update();
+            },
+            (err) => {
+              const error = err.error.message || 'Unable to create Flight';
+              this.openSnackBar(`❌ ${error}`, 'Close');
+            }
+          );
         }
       });
     }
@@ -121,9 +144,16 @@ export class FlightsPageComponent implements OnInit {
     });
     confirmDeleteDialog.afterClosed().subscribe((result) => {
       if (result === 'delete') {
-        this.flightService.deleteFlight(id).subscribe(() => {
-          this.flights = this.flights.filter((flight) => flight.id !== id);
-        });
+        this.flightService.deleteFlight(id).subscribe(
+          () => {
+            this.openSnackBar('✅ Flight deleted', 'Close');
+            this.flights = this.flights.filter((flight) => flight.id !== id);
+          },
+          (err) => {
+            const error = err.error.message || 'Unable to delete Flight';
+            this.openSnackBar(`❌ ${error}`, 'Close');
+          }
+        );
       }
     });
   }

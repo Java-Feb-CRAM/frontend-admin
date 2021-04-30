@@ -10,6 +10,7 @@ import { TableEventType } from '../../interfaces/TableEventType';
 import { AirplaneTypeDetailsComponent } from '../../components/airplane-type/airplane-type-details/airplane-type-details.component';
 import { AirplaneTypeFormComponent } from '../../components/airplane-type/airplane-type-form/airplane-type-form.component';
 import { ConfirmDeleteComponent } from '../../components/confirm-delete/confirm-delete.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-airplane-types-page',
@@ -24,7 +25,8 @@ export class AirplaneTypesPageComponent implements OnInit {
   error = false;
   constructor(
     private readonly airplaneTypeService: AirplaneTypeService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +40,13 @@ export class AirplaneTypesPageComponent implements OnInit {
         this.error = true;
       }
     );
+  }
+
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 20 * 1000,
+      verticalPosition: 'top',
+    });
   }
 
   findAirplaneTypeById(id: number): AirplaneType | undefined {
@@ -79,13 +88,19 @@ export class AirplaneTypesPageComponent implements OnInit {
       });
       updateDialog.afterClosed().subscribe((result) => {
         if (result instanceof AirplaneType) {
-          this.airplaneTypeService
-            .updateAirplaneType(id, result)
-            .subscribe(() => {
+          this.airplaneTypeService.updateAirplaneType(id, result).subscribe(
+            () => {
+              this.openSnackBar('✅ Airplane Type updated', 'Close');
               const index = this.airplaneTypes.findIndex((a) => a.id === id);
               this.airplaneTypes[index] = result;
               this.table?.update();
-            });
+            },
+            (err) => {
+              const error =
+                err.error.message || 'Unable to update Airplane Type';
+              this.openSnackBar(`❌ ${error}`, 'Close');
+            }
+          );
         }
       });
     }
@@ -96,9 +111,9 @@ export class AirplaneTypesPageComponent implements OnInit {
       const createDialog = this.dialog.open(AirplaneTypeFormComponent, {});
       createDialog.afterClosed().subscribe((result) => {
         if (result instanceof AirplaneType) {
-          this.airplaneTypeService
-            .createAirplaneType(result)
-            .subscribe((data) => {
+          this.airplaneTypeService.createAirplaneType(result).subscribe(
+            (data) => {
+              this.openSnackBar('✅ Airplane Type created', 'Close');
               this.airplaneTypes.push(data);
               this.airplaneTypes = [...this.airplaneTypes].sort((a, b) => {
                 if (a.id < b.id) {
@@ -110,7 +125,13 @@ export class AirplaneTypesPageComponent implements OnInit {
                 }
               });
               this.table?.update();
-            });
+            },
+            (err) => {
+              const error =
+                err.error.message || 'Unable to create Airplane Type';
+              this.openSnackBar(`❌ ${error}`, 'Close');
+            }
+          );
         }
       });
     }
@@ -125,11 +146,18 @@ export class AirplaneTypesPageComponent implements OnInit {
     });
     confirmDeleteDialog.afterClosed().subscribe((result) => {
       if (result === 'delete') {
-        this.airplaneTypeService.deleteAirplaneType(id).subscribe(() => {
-          this.airplaneTypes = this.airplaneTypes.filter(
-            (airplaneType) => airplaneType.id !== id
-          );
-        });
+        this.airplaneTypeService.deleteAirplaneType(id).subscribe(
+          () => {
+            this.openSnackBar('✅ Airplane Type deleted', 'Close');
+            this.airplaneTypes = this.airplaneTypes.filter(
+              (airplaneType) => airplaneType.id !== id
+            );
+          },
+          (err) => {
+            const error = err.error.message || 'Unable to delete Airplane Type';
+            this.openSnackBar(`❌ ${error}`, 'Close');
+          }
+        );
       }
     });
   }

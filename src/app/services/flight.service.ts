@@ -56,9 +56,6 @@ export class FlightService {
           data.seatPrice,
           data.bookings
         );
-      }),
-      catchError((error) => {
-        return throwError('Something went wrong!');
       })
     );
   }

@@ -10,6 +10,7 @@ import { TableEventType } from '../../interfaces/TableEventType';
 import { AirplaneDetailsComponent } from '../../components/airplane/airplane-details/airplane-details.component';
 import { AirplaneFormComponent } from '../../components/airplane/airplane-form/airplane-form.component';
 import { ConfirmDeleteComponent } from '../../components/confirm-delete/confirm-delete.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-airplanes-page',
@@ -24,7 +25,8 @@ export class AirplanesPageComponent implements OnInit {
   error = false;
   constructor(
     private readonly airplaneService: AirplaneService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +40,13 @@ export class AirplanesPageComponent implements OnInit {
         this.error = true;
       }
     );
+  }
+
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 20 * 1000,
+      verticalPosition: 'top',
+    });
   }
 
   findAirplaneById(id: number): Airplane | undefined {
@@ -79,11 +88,18 @@ export class AirplanesPageComponent implements OnInit {
       });
       updateDialog.afterClosed().subscribe((result) => {
         if (result instanceof Airplane) {
-          this.airplaneService.updateAirplane(id, result).subscribe(() => {
-            const index = this.airplanes.findIndex((a) => a.id === id);
-            this.airplanes[index] = result;
-            this.table?.update();
-          });
+          this.airplaneService.updateAirplane(id, result).subscribe(
+            () => {
+              this.openSnackBar('✅ Airplane updated', 'Close');
+              const index = this.airplanes.findIndex((a) => a.id === id);
+              this.airplanes[index] = result;
+              this.table?.update();
+            },
+            (err) => {
+              const error = err.error.message || 'Unable to update Airplane';
+              this.openSnackBar(`❌ ${error}`, 'Close');
+            }
+          );
         }
       });
     }
@@ -94,19 +110,26 @@ export class AirplanesPageComponent implements OnInit {
       const createDialog = this.dialog.open(AirplaneFormComponent, {});
       createDialog.afterClosed().subscribe((result) => {
         if (result instanceof Airplane) {
-          this.airplaneService.createAirplane(result).subscribe((data) => {
-            this.airplanes.push(data);
-            this.airplanes = [...this.airplanes].sort((a, b) => {
-              if (a.id < b.id) {
-                return -1;
-              } else if (a.id > b.id) {
-                return 1;
-              } else {
-                return 0;
-              }
-            });
-            this.table?.update();
-          });
+          this.airplaneService.createAirplane(result).subscribe(
+            (data) => {
+              this.openSnackBar('✅ Airplane created', 'Close');
+              this.airplanes.push(data);
+              this.airplanes = [...this.airplanes].sort((a, b) => {
+                if (a.id < b.id) {
+                  return -1;
+                } else if (a.id > b.id) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              });
+              this.table?.update();
+            },
+            (err) => {
+              const error = err.error.message || 'Unable to create Airplane';
+              this.openSnackBar(`❌ ${error}`, 'Close');
+            }
+          );
         }
       });
     }
@@ -121,11 +144,18 @@ export class AirplanesPageComponent implements OnInit {
     });
     confirmDeleteDialog.afterClosed().subscribe((result) => {
       if (result === 'delete') {
-        this.airplaneService.deleteAirplane(id).subscribe(() => {
-          this.airplanes = this.airplanes.filter(
-            (airplane) => airplane.id !== id
-          );
-        });
+        this.airplaneService.deleteAirplane(id).subscribe(
+          () => {
+            this.openSnackBar('✅ Airplane deleted', 'Close');
+            this.airplanes = this.airplanes.filter(
+              (airplane) => airplane.id !== id
+            );
+          },
+          (err) => {
+            const error = err.error.message || 'Unable to delete Airplane';
+            this.openSnackBar(`❌ ${error}`, 'Close');
+          }
+        );
       }
     });
   }

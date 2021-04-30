@@ -10,6 +10,7 @@ import { TableEventType } from '../../interfaces/TableEventType';
 import { RouteDetailsComponent } from '../../components/route/route-details/route-details.component';
 import { RouteFormComponent } from '../../components/route/route-form/route-form.component';
 import { ConfirmDeleteComponent } from '../../components/confirm-delete/confirm-delete.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-routes-page',
@@ -24,7 +25,8 @@ export class RoutesPageComponent implements OnInit {
 
   constructor(
     private readonly routeService: RouteService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +40,13 @@ export class RoutesPageComponent implements OnInit {
         this.error = true;
       }
     );
+  }
+
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 20 * 1000,
+      verticalPosition: 'top',
+    });
   }
 
   findRouteById(id: number): Route | undefined {
@@ -79,11 +88,18 @@ export class RoutesPageComponent implements OnInit {
       });
       updateDialog.afterClosed().subscribe((result) => {
         if (result instanceof Route) {
-          this.routeService.updateRoute(id, result).subscribe(() => {
-            const index = this.routes.findIndex((r) => r.id === id);
-            this.routes[index] = result;
-            this.table?.update();
-          });
+          this.routeService.updateRoute(id, result).subscribe(
+            () => {
+              this.openSnackBar('✅ Route updated', 'Close');
+              const index = this.routes.findIndex((r) => r.id === id);
+              this.routes[index] = result;
+              this.table?.update();
+            },
+            (err) => {
+              const error = err.error.message || 'Unable to update Route';
+              this.openSnackBar(`❌ ${error}`, 'Close');
+            }
+          );
         }
       });
     }
@@ -94,19 +110,26 @@ export class RoutesPageComponent implements OnInit {
       const createDialog = this.dialog.open(RouteFormComponent, {});
       createDialog.afterClosed().subscribe((result) => {
         if (result instanceof Route) {
-          this.routeService.createRoute(result).subscribe((data) => {
-            this.routes.push(data);
-            this.routes = [...this.routes].sort((a, b) => {
-              if (a.id < b.id) {
-                return -1;
-              } else if (a.id > b.id) {
-                return 1;
-              } else {
-                return 0;
-              }
-            });
-            this.table?.update();
-          });
+          this.routeService.createRoute(result).subscribe(
+            (data) => {
+              this.openSnackBar('✅ Route created', 'Close');
+              this.routes.push(data);
+              this.routes = [...this.routes].sort((a, b) => {
+                if (a.id < b.id) {
+                  return -1;
+                } else if (a.id > b.id) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              });
+              this.table?.update();
+            },
+            (err) => {
+              const error = err.error.message || 'Unable to create Route';
+              this.openSnackBar(`❌ ${error}`, 'Close');
+            }
+          );
         }
       });
     }
@@ -121,9 +144,16 @@ export class RoutesPageComponent implements OnInit {
     });
     confirmDeleteDialog.afterClosed().subscribe((result) => {
       if (result === 'delete') {
-        this.routeService.deleteRoute(id).subscribe(() => {
-          this.routes = this.routes.filter((route) => route.id !== id);
-        });
+        this.routeService.deleteRoute(id).subscribe(
+          () => {
+            this.openSnackBar('✅ Route deleted', 'Close');
+            this.routes = this.routes.filter((route) => route.id !== id);
+          },
+          (err) => {
+            const error = err.error.message || 'Unable to delete Route';
+            this.openSnackBar(`❌ ${error}`, 'Close');
+          }
+        );
       }
     });
   }

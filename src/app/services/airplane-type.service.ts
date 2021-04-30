@@ -39,9 +39,6 @@ export class AirplaneTypeService {
       .pipe(
         map((data: AirplaneType) => {
           return new AirplaneType(data.id, data.maxCapacity, []);
-        }),
-        catchError((error) => {
-          return throwError('Something went wrong!');
         })
       );
   }
