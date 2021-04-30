@@ -18,8 +18,8 @@ import { AirportService } from '../../../services/airport.service';
 import { MatOption } from '@angular/material/core';
 import { By } from '@angular/platform-browser';
 import { Route } from '../../../models/Route';
-import createSpy = jasmine.createSpy;
 import { MatButton, MatButtonModule } from '@angular/material/button';
+import createSpy = jasmine.createSpy;
 
 const airportLAX = new Airport('LAX', 'Los Angeles', [], []);
 const airportSFO = new Airport('SFO', 'San Francisco', [], []);

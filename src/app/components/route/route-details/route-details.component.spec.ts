@@ -8,8 +8,8 @@ import { By } from '@angular/platform-browser';
 import { Flight } from '../../../models/Flight';
 import { Airplane } from '../../../models/Airplane';
 import { AirplaneType } from '../../../models/AirplaneType';
-import createSpy = jasmine.createSpy;
 import { MatButton, MatButtonModule } from '@angular/material/button';
+import createSpy = jasmine.createSpy;
 
 const flight = new Flight(
   1,

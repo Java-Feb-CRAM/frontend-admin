@@ -13,8 +13,8 @@ import { Airplane } from '../../../models/Airplane';
 import { AirplaneType } from '../../../models/AirplaneType';
 import { By } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
-import createSpy = jasmine.createSpy;
 import { MatButton, MatButtonModule } from '@angular/material/button';
+import createSpy = jasmine.createSpy;
 
 const flight = new Flight(
   1,

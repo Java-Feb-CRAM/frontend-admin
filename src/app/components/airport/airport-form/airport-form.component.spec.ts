@@ -13,8 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { Airport } from '../../../models/Airport';
-import createSpy = jasmine.createSpy;
 import { MatButton, MatButtonModule } from '@angular/material/button';
+import createSpy = jasmine.createSpy;
 
 const airport = new Airport('IAH', 'Houston', [], []);
 
