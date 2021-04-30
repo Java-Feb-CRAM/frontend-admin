@@ -17,6 +17,7 @@ import { By } from '@angular/platform-browser';
 import { TableEventType } from '../../../interfaces/TableEventType';
 import { Airplane } from '../../../models/Airplane';
 import { AirplaneType } from '../../../models/AirplaneType';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 
 const airplaneTypes = [new AirplaneType(1, 23, [])];
 
@@ -34,6 +35,7 @@ describe('AirplaneTypeTableComponent', () => {
         MatPaginator,
         MatSort,
         MatTable,
+        MatButton,
       ],
       imports: [
         FormsModule,
@@ -44,6 +46,7 @@ describe('AirplaneTypeTableComponent', () => {
         MatPaginatorModule,
         MatSortModule,
         MatTableModule,
+        MatButtonModule,
       ],
     }).compileComponents();
   });

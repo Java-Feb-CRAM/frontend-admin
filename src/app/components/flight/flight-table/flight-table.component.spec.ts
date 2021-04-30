@@ -21,6 +21,7 @@ import { Flight } from '../../../models/Flight';
 import { Route } from '../../../models/Route';
 import { Airport } from '../../../models/Airport';
 import { DatePipe } from '@angular/common';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 
 const flights = [
   new Flight(
@@ -53,6 +54,7 @@ describe('FlightTableComponent', () => {
         MatPaginator,
         MatSort,
         MatTable,
+        MatButton,
       ],
       imports: [
         FormsModule,
@@ -63,6 +65,7 @@ describe('FlightTableComponent', () => {
         MatPaginatorModule,
         MatSortModule,
         MatTableModule,
+        MatButtonModule,
       ],
     }).compileComponents();
   });

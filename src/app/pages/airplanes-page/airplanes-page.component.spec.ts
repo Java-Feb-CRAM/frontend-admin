@@ -11,6 +11,7 @@ import { AirplaneService } from '../../services/airplane.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TableEventType } from '../../interfaces/TableEventType';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 const airplane = new Airplane(1, new AirplaneType(3, 4, []), []);
 
@@ -56,7 +57,9 @@ describe('AirplanesPageComponent', () => {
           provide: MatDialog,
           useClass: MatDialogStub,
         },
+        MatSnackBar,
       ],
+      imports: [MatSnackBarModule],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });

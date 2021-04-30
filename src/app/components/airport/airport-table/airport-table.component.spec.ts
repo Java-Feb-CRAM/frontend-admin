@@ -17,6 +17,7 @@ import { Airport } from '../../../models/Airport';
 import { By } from '@angular/platform-browser';
 import { TableEventType } from '../../../interfaces/TableEventType';
 import { Route } from '../../../models/Route';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 
 const airports = [new Airport('IAH', 'Houston', [], [])];
 
@@ -34,6 +35,7 @@ describe('AirportTableComponent', () => {
         MatPaginator,
         MatSort,
         MatTable,
+        MatButton,
       ],
       imports: [
         FormsModule,
@@ -44,6 +46,7 @@ describe('AirportTableComponent', () => {
         MatPaginatorModule,
         MatSortModule,
         MatTableModule,
+        MatButtonModule,
       ],
     }).compileComponents();
   });

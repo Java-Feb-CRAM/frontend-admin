@@ -20,6 +20,7 @@ import { TableEventType } from '../../../interfaces/TableEventType';
 import { Airplane } from '../../../models/Airplane';
 import { AirplaneType } from '../../../models/AirplaneType';
 import { Flight } from '../../../models/Flight';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 
 const routes = [
   new Route(
@@ -44,6 +45,7 @@ describe('RouteTableComponent', () => {
         MatPaginator,
         MatSort,
         MatTable,
+        MatButton,
       ],
       imports: [
         FormsModule,
@@ -54,6 +56,7 @@ describe('RouteTableComponent', () => {
         MatPaginatorModule,
         MatSortModule,
         MatTableModule,
+        MatButtonModule,
       ],
     }).compileComponents();
   });
