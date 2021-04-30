@@ -19,6 +19,8 @@ import { AirportDetailsComponent } from '../../components/airport/airport-detail
 export class AirportsPageComponent implements OnInit {
   airports: Airport[] = [];
   @ViewChild(AirportTableComponent) table: AirportTableComponent | null = null;
+  loading = true;
+  error = false;
 
   constructor(
     private readonly airportService: AirportService,
@@ -26,9 +28,16 @@ export class AirportsPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.airportService.getAllAirports().subscribe((data) => {
-      this.airports = data;
-    });
+    this.airportService.getAllAirports().subscribe(
+      (data) => {
+        this.airports = data;
+        this.loading = false;
+      },
+      (err) => {
+        this.loading = false;
+        this.error = true;
+      }
+    );
   }
 
   findAirportById(iataId: string): Airport | undefined {

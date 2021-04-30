@@ -19,6 +19,8 @@ import { ConfirmDeleteComponent } from '../../components/confirm-delete/confirm-
 export class RoutesPageComponent implements OnInit {
   routes: Route[] = [];
   @ViewChild(RouteTableComponent) table: RouteTableComponent | null = null;
+  loading = true;
+  error = false;
 
   constructor(
     private readonly routeService: RouteService,
@@ -26,7 +28,16 @@ export class RoutesPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.routeService.getAllRoutes().subscribe((data) => (this.routes = data));
+    this.routeService.getAllRoutes().subscribe(
+      (data) => {
+        this.routes = data;
+        this.loading = false;
+      },
+      (err) => {
+        this.loading = false;
+        this.error = true;
+      }
+    );
   }
 
   findRouteById(id: number): Route | undefined {

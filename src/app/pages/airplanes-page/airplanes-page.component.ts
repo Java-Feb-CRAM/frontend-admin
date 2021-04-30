@@ -20,15 +20,24 @@ export class AirplanesPageComponent implements OnInit {
   airplanes: Airplane[] = [];
   @ViewChild(AirplaneTableComponent)
   table: AirplaneTableComponent | null = null;
+  loading = true;
+  error = false;
   constructor(
     private readonly airplaneService: AirplaneService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.airplaneService
-      .getAllAirplanes()
-      .subscribe((data) => (this.airplanes = data));
+    this.airplaneService.getAllAirplanes().subscribe(
+      (data) => {
+        this.airplanes = data;
+        this.loading = false;
+      },
+      (err) => {
+        this.loading = false;
+        this.error = true;
+      }
+    );
   }
 
   findAirplaneById(id: number): Airplane | undefined {

@@ -19,6 +19,8 @@ import { ConfirmDeleteComponent } from '../../components/confirm-delete/confirm-
 export class FlightsPageComponent implements OnInit {
   flights: Flight[] = [];
   @ViewChild(FlightTableComponent) table: FlightTableComponent | null = null;
+  loading = true;
+  error = false;
 
   constructor(
     private readonly flightService: FlightService,
@@ -26,9 +28,16 @@ export class FlightsPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.flightService
-      .getAllFlights()
-      .subscribe((data) => (this.flights = data));
+    this.flightService.getAllFlights().subscribe(
+      (data) => {
+        this.flights = data;
+        this.loading = false;
+      },
+      (err) => {
+        this.loading = false;
+        this.error = true;
+      }
+    );
   }
 
   findFlightById(id: number): Flight | undefined {
