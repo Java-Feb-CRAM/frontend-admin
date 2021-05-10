@@ -56,6 +56,11 @@ import { LoadingButtonComponent } from './components/loading-button/loading-butt
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SeatLayoutsPageComponent } from './pages/seat-layouts-page/seat-layouts-page.component';
+import { ClassSeatsComponent } from './components/seating/class-seats/class-seats.component';
+import { FlightSeatsComponent } from './components/seating/flight-seats/flight-seats.component';
+import { SeatComponent } from './components/seating/seat/seat.component';
+import { CreateSeatLayoutPageComponent } from './pages/create-seat-layout-page/create-seat-layout-page.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +93,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     FlightDetailsComponent,
     FlightsPageComponent,
     LoadingButtonComponent,
+    SeatLayoutsPageComponent,
+    ClassSeatsComponent,
+    FlightSeatsComponent,
+    SeatComponent,
+    CreateSeatLayoutPageComponent,
   ],
   imports: [
     BrowserModule,

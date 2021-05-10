@@ -1,0 +1,7 @@
+<a mat-raised-button color="primary" href="create-seat-layout">New</a>
+<br />
+<ng-container *ngFor="let seatLayout of seatLayouts">
+  <b>#{{ seatLayout.id }}</b>
+  <app-flight-seats [seatLayout]="seatLayout"></app-flight-seats>
+  <hr />
+</ng-container>

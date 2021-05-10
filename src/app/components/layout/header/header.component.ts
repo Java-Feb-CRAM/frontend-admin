@@ -16,6 +16,7 @@ export class HeaderComponent {
   navigation = [
     { link: 'airplanes', label: 'Airplanes' },
     { link: 'airplane-types', label: 'Airplane Types' },
+    { link: 'seat-layouts', label: 'Seat Layouts' },
     { link: 'airports', label: 'Airports' },
     { link: 'flights', label: 'Flights' },
     { link: 'routes', label: 'Routes' },

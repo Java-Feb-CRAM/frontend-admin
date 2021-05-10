@@ -1,0 +1,8 @@
+<div class="airplaneParent">
+  <div class="airplane">
+    <ng-container *ngFor="let seatGroup of seatLayout.seatGroups">
+      <app-class-seats [seatGroup]="seatGroup"></app-class-seats>
+      <br />
+    </ng-container>
+  </div>
+</div>

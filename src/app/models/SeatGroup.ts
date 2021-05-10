@@ -6,6 +6,7 @@ export class SeatGroup {
   public name: string;
   public columns: SeatColumn[];
   public seatLocations: SeatLocation[];
+  public greatestRow = 0;
   constructor(
     id: number,
     name: string,
@@ -16,5 +17,10 @@ export class SeatGroup {
     this.name = name;
     this.columns = columns;
     this.seatLocations = seatLocations;
+    this.seatLocations.forEach((seat) => {
+      if (seat.row > this.greatestRow) {
+        this.greatestRow = seat.row;
+      }
+    });
   }
 }

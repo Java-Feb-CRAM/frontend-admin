@@ -9,6 +9,8 @@ import { AirplaneTypesPageComponent } from './pages/airplane-types-page/airplane
 import { AirplanesPageComponent } from './pages/airplanes-page/airplanes-page.component';
 import { RoutesPageComponent } from './pages/routes-page/routes-page.component';
 import { FlightsPageComponent } from './pages/flights-page/flights-page.component';
+import { SeatLayoutsPageComponent } from './pages/seat-layouts-page/seat-layouts-page.component';
+import { CreateSeatLayoutPageComponent } from './pages/create-seat-layout-page/create-seat-layout-page.component';
 
 const routes: Routes = [
   {
@@ -29,6 +31,16 @@ const routes: Routes = [
     path: 'airplane-types',
     canActivate: [AuthGuard],
     component: AirplaneTypesPageComponent,
+  },
+  {
+    path: 'seat-layouts',
+    canActivate: [AuthGuard],
+    component: SeatLayoutsPageComponent,
+  },
+  {
+    path: 'create-seat-layout',
+    canActivate: [AuthGuard],
+    component: CreateSeatLayoutPageComponent,
   },
   {
     path: 'airports',

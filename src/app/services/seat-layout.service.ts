@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { SeatLayout } from '../models/SeatLayout';
 import { map } from 'rxjs/operators';
+import { SeatGroup } from '../models/SeatGroup';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,16 @@ export class SeatLayoutService {
     return this.http.get<SeatLayout[]>(this.seatLayoutsUrl).pipe(
       map((data: SeatLayout[]) =>
         data.map((seatLayout) => {
-          return new SeatLayout(seatLayout.id, seatLayout.seatGroups);
+          const groups = seatLayout.seatGroups.map((group: any) => {
+            const cols = group.columns.split('');
+            return new SeatGroup(
+              group.id,
+              group.name,
+              cols,
+              group.seatLocations
+            );
+          });
+          return new SeatLayout(seatLayout.id, groups);
         })
       )
     );
