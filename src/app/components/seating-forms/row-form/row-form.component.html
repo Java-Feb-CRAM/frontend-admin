@@ -1,0 +1,33 @@
+<!--<div [formGroup]="rowGroup">-->
+<!--  <input type="number" formControlName="no" />-->
+<!--  <button type="button" (click)="addCol()">Add Col</button>-->
+<!--  <div formArrayName="cols">-->
+<!--    <div *ngFor="let col of cols.controls; let i = index">-->
+<!--      <div [formGroupName]="i">-->
+<!--        <app-col-form [colGroup]="colGroup(i)"></app-col-form>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<ng-container [formGroup]="rowGroup">
+  <th>
+    <button type="button" (click)="removeEvent.emit(idx)">X</button>
+    <input type="number" formControlName="no" />
+  </th>
+  <ng-container formArrayName="cols">
+    <ng-container *ngFor="let col of cols.controls; let i = index">
+      <ng-container [formGroupName]="i">
+        <ng-container
+          *ngIf="colHeaders.controls[i].value.symbol !== ' '; else empty"
+        >
+          <td app-col-form [colGroup]="colGroup(i)"></td>
+        </ng-container>
+        <ng-template #empty>
+          <td></td>
+        </ng-template>
+      </ng-container>
+    </ng-container>
+    <td></td>
+  </ng-container>
+</ng-container>

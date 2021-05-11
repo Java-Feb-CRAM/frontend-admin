@@ -1,1 +1,22 @@
-<p>create-seat-layout-page works!</p>
+<h1>Create Seat Layout</h1>
+<app-flight-seats
+  *ngIf="seatLayout !== null"
+  [seatLayout]="seatLayout"
+></app-flight-seats>
+
+<form [formGroup]="seatLayoutForm" (ngSubmit)="onSubmit()">
+  <button type="button" (click)="addSection()">Add Section</button>
+  <div formArrayName="sections">
+    <div *ngFor="let section of sections.controls; let i = index">
+      <div [formGroupName]="i">
+        <app-section-form
+          [sectionGroup]="sectionGroup(i)"
+          [idx]="i"
+          (removeEvent)="removeSection($event)"
+        ></app-section-form>
+      </div>
+      <hr />
+    </div>
+  </div>
+</form>
+<pre>{{ this.seatLayoutForm.value | json }}</pre>

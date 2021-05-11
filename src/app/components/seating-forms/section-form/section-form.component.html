@@ -1,0 +1,47 @@
+<table [formGroup]="sectionGroup">
+  <tr>
+    <th width="175"></th>
+    <th style="text-align: center">
+      <input type="text" formControlName="name" placeholder="Name" />
+    </th>
+    <th width="30">
+      <button type="button" (click)="removeEvent.emit(idx)">X</button>
+    </th>
+  </tr>
+  <tr>
+    <ng-container formArrayName="colHeaders">
+      <th></th>
+      <ng-container
+        *ngFor="let colHeader of colHeaders.controls; let j = index"
+      >
+        <ng-container [formGroupName]="j">
+          <th
+            app-col-header-form
+            [idx]="j"
+            (removeEvent)="removeCol($event)"
+            [colHeaderGroup]="colHeaderGroup(j)"
+          ></th>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <th><button type="button" (click)="addCol()">+</button></th>
+  </tr>
+  <ng-container formArrayName="rows">
+    <ng-container *ngFor="let row of rows.controls; let i = index">
+      <ng-container [formGroupName]="i">
+        <tr
+          #row
+          app-row-form
+          [rowGroup]="rowGroup(i)"
+          [colHeaders]="colHeaders"
+          (removeEvent)="removeRow($event)"
+        ></tr>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+  <tr>
+    <th colspan="100">
+      <button type="button" (click)="addRow()">Add Row</button>
+    </th>
+  </tr>
+</table>

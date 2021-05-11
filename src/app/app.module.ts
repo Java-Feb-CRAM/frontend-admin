@@ -61,6 +61,10 @@ import { ClassSeatsComponent } from './components/seating/class-seats/class-seat
 import { FlightSeatsComponent } from './components/seating/flight-seats/flight-seats.component';
 import { SeatComponent } from './components/seating/seat/seat.component';
 import { CreateSeatLayoutPageComponent } from './pages/create-seat-layout-page/create-seat-layout-page.component';
+import { SectionFormComponent } from './components/seating-forms/section-form/section-form.component';
+import { RowFormComponent } from './components/seating-forms/row-form/row-form.component';
+import { ColFormComponent } from './components/seating-forms/col-form/col-form.component';
+import { ColHeaderFormComponent } from './components/seating-forms/col-header-form/col-header-form.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +102,10 @@ import { CreateSeatLayoutPageComponent } from './pages/create-seat-layout-page/c
     FlightSeatsComponent,
     SeatComponent,
     CreateSeatLayoutPageComponent,
+    SectionFormComponent,
+    RowFormComponent,
+    ColFormComponent,
+    ColHeaderFormComponent,
   ],
   imports: [
     BrowserModule,
