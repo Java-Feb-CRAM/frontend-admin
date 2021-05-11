@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Form, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { RowFormComponent } from '../row-form/row-form.component';
+import { last } from 'rxjs/operators';
 
 @Component({
   selector: 'app-section-form',
@@ -78,8 +79,19 @@ export class SectionFormComponent implements OnInit {
   }
 
   initRow(): FormGroup {
+    let no = 0;
+    if (this.rows.length > 0) {
+      console.log('!!!!!');
+      console.log(this.rows);
+      console.log('!!!!!!!');
+      const lastRow = this.rows.controls[this.rows.controls.length - 1].get(
+        'no'
+      )?.value;
+      console.log('LAST ROW', lastRow);
+      no = lastRow + 1;
+    }
     return this.fb.group({
-      no: '',
+      no,
       cols: this.fb.array([]),
     });
   }

@@ -1,47 +1,85 @@
-<table [formGroup]="sectionGroup">
-  <tr>
-    <th width="175"></th>
-    <th style="text-align: center">
-      <input type="text" formControlName="name" placeholder="Name" />
-    </th>
-    <th width="30">
-      <button type="button" (click)="removeEvent.emit(idx)">X</button>
-    </th>
-  </tr>
-  <tr>
-    <ng-container formArrayName="colHeaders">
-      <th></th>
-      <ng-container
-        *ngFor="let colHeader of colHeaders.controls; let j = index"
-      >
-        <ng-container [formGroupName]="j">
-          <th
-            app-col-header-form
-            [idx]="j"
-            (removeEvent)="removeCol($event)"
-            [colHeaderGroup]="colHeaderGroup(j)"
-          ></th>
+<ng-container [formGroup]="sectionGroup">
+  <table class="mat-elevation-z8">
+    <tr>
+      <th width="40"></th>
+      <th style="text-align: center">
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="name"
+            placeholder="First Class"
+          />
+        </mat-form-field>
+      </th>
+      <th width="40">
+        <button
+          mat-icon-button
+          type="button"
+          (click)="removeEvent.emit(idx)"
+          color="warn"
+          matTooltip="Remove Section"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </th>
+    </tr>
+  </table>
+  <table class="mat-elevation-z8">
+    <tr>
+      <ng-container formArrayName="colHeaders">
+        <th></th>
+        <ng-container
+          *ngFor="let colHeader of colHeaders.controls; let j = index"
+        >
+          <ng-container [formGroupName]="j">
+            <th
+              app-col-header-form
+              [idx]="j"
+              (removeEvent)="removeCol($event)"
+              [colHeaderGroup]="colHeaderGroup(j)"
+              style="text-align: left"
+            ></th>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <th style="width: 100%; text-align: right">
+        <button
+          mat-icon-button
+          type="button"
+          (click)="addCol()"
+          color="accent"
+          matTooltip="Add Column"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </th>
+    </tr>
+    <ng-container formArrayName="rows">
+      <ng-container *ngFor="let row of rows.controls; let i = index">
+        <ng-container [formGroupName]="i">
+          <tr
+            #row
+            app-row-form
+            [rowGroup]="rowGroup(i)"
+            [colHeaders]="colHeaders"
+            (removeEvent)="removeRow($event)"
+          ></tr>
         </ng-container>
       </ng-container>
     </ng-container>
-    <th><button type="button" (click)="addCol()">+</button></th>
-  </tr>
-  <ng-container formArrayName="rows">
-    <ng-container *ngFor="let row of rows.controls; let i = index">
-      <ng-container [formGroupName]="i">
-        <tr
-          #row
-          app-row-form
-          [rowGroup]="rowGroup(i)"
-          [colHeaders]="colHeaders"
-          (removeEvent)="removeRow($event)"
-        ></tr>
-      </ng-container>
-    </ng-container>
-  </ng-container>
-  <tr>
-    <th colspan="100">
-      <button type="button" (click)="addRow()">Add Row</button>
-    </th>
-  </tr>
-</table>
+    <tr>
+      <th colspan="100">
+        <button
+          type="button"
+          (click)="addRow()"
+          mat-raised-button
+          color="accent"
+        >
+          Add Row
+        </button>
+      </th>
+    </tr>
+  </table>
+</ng-container>

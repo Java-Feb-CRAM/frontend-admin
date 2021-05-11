@@ -77,9 +77,17 @@ export class CreateSeatLayoutPageComponent implements OnInit {
         }
         for (let i = 0; i < row.cols.length; i++) {
           const col = row.cols[i];
-          const symbol = colHeaders[i].symbol;
-          const seat = new SeatLocation(0, 1.5, 1.5, symbol, row.no);
-          seats.push(seat);
+          if (col.enabled) {
+            const symbol = colHeaders[i].symbol;
+            const seat = new SeatLocation(
+              0,
+              col.width,
+              col.height,
+              symbol,
+              row.no
+            );
+            seats.push(seat);
+          }
         }
       });
       const columns = colHeaders.map((colHeader) => colHeader.symbol);

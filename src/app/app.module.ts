@@ -65,6 +65,7 @@ import { SectionFormComponent } from './components/seating-forms/section-form/se
 import { RowFormComponent } from './components/seating-forms/row-form/row-form.component';
 import { ColFormComponent } from './components/seating-forms/col-form/col-form.component';
 import { ColHeaderFormComponent } from './components/seating-forms/col-header-form/col-header-form.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -136,6 +137,7 @@ import { ColHeaderFormComponent } from './components/seating-forms/col-header-fo
     MatProgressSpinnerModule,
     MatCardModule,
     MatSnackBarModule,
+    MatSlideToggleModule,
   ],
   providers: [
     {

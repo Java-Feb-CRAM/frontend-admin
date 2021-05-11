@@ -12,8 +12,23 @@
 
 <ng-container [formGroup]="rowGroup">
   <th>
-    <button type="button" (click)="removeEvent.emit(idx)">X</button>
-    <input type="number" formControlName="no" />
+    <div>
+      <div>
+        <button
+          mat-icon-button
+          type="button"
+          color="warn"
+          (click)="removeEvent.emit(idx)"
+          matTooltip="Remove Row"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Row #</mat-label>
+        <input matInput type="number" formControlName="no" />
+      </mat-form-field>
+    </div>
   </th>
   <ng-container formArrayName="cols">
     <ng-container *ngFor="let col of cols.controls; let i = index">
@@ -21,13 +36,17 @@
         <ng-container
           *ngIf="colHeaders.controls[i].value.symbol !== ' '; else empty"
         >
-          <td app-col-form [colGroup]="colGroup(i)"></td>
+          <td
+            app-col-form
+            [colGroup]="colGroup(i)"
+            style="text-align: center"
+          ></td>
         </ng-container>
         <ng-template #empty>
           <td></td>
         </ng-template>
       </ng-container>
     </ng-container>
-    <td></td>
+    <th></th>
   </ng-container>
 </ng-container>

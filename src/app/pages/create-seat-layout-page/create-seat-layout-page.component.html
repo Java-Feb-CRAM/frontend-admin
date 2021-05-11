@@ -5,7 +5,18 @@
 ></app-flight-seats>
 
 <form [formGroup]="seatLayoutForm" (ngSubmit)="onSubmit()">
-  <button type="button" (click)="addSection()">Add Section</button>
+  <div style="text-align: right; margin-bottom: 20px">
+    <button
+      type="button"
+      (click)="addSection()"
+      mat-fab
+      color="accent"
+      matTooltip="Add Section"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
   <div formArrayName="sections">
     <div *ngFor="let section of sections.controls; let i = index">
       <div [formGroupName]="i">

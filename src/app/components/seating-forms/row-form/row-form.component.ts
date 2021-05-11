@@ -38,7 +38,9 @@ export class RowFormComponent implements OnInit {
 
   initCol(): FormGroup {
     return this.fb.group({
-      enabled: true,
+      enabled: false,
+      width: 1,
+      height: 1,
     });
   }
 }
