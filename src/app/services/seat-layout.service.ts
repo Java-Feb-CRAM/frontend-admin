@@ -33,4 +33,12 @@ export class SeatLayoutService {
       )
     );
   }
+
+  createSeatLayout(seatLayout: SeatLayout): Observable<SeatLayout> {
+    return this.http.post<SeatLayout>(this.seatLayoutsUrl, seatLayout);
+  }
+
+  deleteSeatLayout(id: number): Observable<{}> {
+    return this.http.delete(`${this.seatLayoutsUrl}/${id}`);
+  }
 }

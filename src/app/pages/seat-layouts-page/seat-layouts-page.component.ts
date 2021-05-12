@@ -16,4 +16,10 @@ export class SeatLayoutsPageComponent implements OnInit {
       this.seatLayouts = layouts;
     });
   }
+
+  deleteSeatLayout(id: number): void {
+    this.seatLayoutService.deleteSeatLayout(id).subscribe(() => {
+      this.seatLayouts = this.seatLayouts.filter((layout) => layout.id !== id);
+    });
+  }
 }

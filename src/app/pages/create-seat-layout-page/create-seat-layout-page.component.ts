@@ -9,6 +9,7 @@ import {
 import { SeatLocation } from '../../models/SeatLocation';
 import { SeatGroup } from '../../models/SeatGroup';
 import { SeatLayout } from '../../models/SeatLayout';
+import { SeatLayoutService } from '../../services/seat-layout.service';
 
 @Component({
   selector: 'app-create-seat-layout-page',
@@ -19,7 +20,10 @@ export class CreateSeatLayoutPageComponent implements OnInit {
   // @ts-ignore
   seatLayoutForm: FormGroup;
   seatLayout: SeatLayout | null = null;
-  constructor(private readonly fb: FormBuilder) {}
+  constructor(
+    private readonly fb: FormBuilder,
+    private seatLayoutService: SeatLayoutService
+  ) {}
 
   ngOnInit(): void {
     this.seatLayoutForm = this.fb.group({
@@ -62,7 +66,15 @@ export class CreateSeatLayoutPageComponent implements OnInit {
     this.sections.removeAt(idx);
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    if (this.seatLayout !== null) {
+      this.seatLayoutService
+        .createSeatLayout(this.seatLayout)
+        .subscribe((createdSeatLayout) => {
+          console.log('success');
+        });
+    }
+  }
 
   format(value: any): void {
     const groups: SeatGroup[] = [];

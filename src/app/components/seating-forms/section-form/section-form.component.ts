@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { Form, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { RowFormComponent } from '../row-form/row-form.component';
-import { last } from 'rxjs/operators';
+import { distinctUntilChanged, last, pairwise } from 'rxjs/operators';
 
 @Component({
   selector: 'app-section-form',
@@ -30,6 +30,24 @@ export class SectionFormComponent implements OnInit {
   ngOnInit(): void {
     this.addRow();
     this.addColHeader();
+    this.onChanges();
+  }
+
+  onChanges(): void {
+    this.sectionGroup
+      .get('colHeaders')
+      ?.valueChanges.pipe(distinctUntilChanged(), pairwise())
+      .subscribe(([oldValue, newValue]) => {
+        console.log('CHANGE!!!!!!', oldValue, newValue);
+        for (let i = 0; i < oldValue.length; i++) {
+          if (newValue[i] !== oldValue[i]) {
+            if (newValue[i].symbol === ' ') {
+              console.log('reset');
+              this.rowComponents.forEach((comp) => comp.resetCol(i));
+            }
+          }
+        }
+      });
   }
 
   get rows(): FormArray {

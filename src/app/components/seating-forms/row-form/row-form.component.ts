@@ -36,6 +36,12 @@ export class RowFormComponent implements OnInit {
     this.cols.removeAt(idx);
   }
 
+  resetCol(idx: number): void {
+    this.colGroup(idx).patchValue({
+      enabled: false,
+    });
+  }
+
   initCol(): FormGroup {
     return this.fb.group({
       enabled: false,

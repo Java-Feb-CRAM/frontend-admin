@@ -1,33 +1,47 @@
-<h1>Create Seat Layout</h1>
-<app-flight-seats
-  *ngIf="seatLayout !== null"
-  [seatLayout]="seatLayout"
-></app-flight-seats>
+<div class="wide-wrapper">
+  <h1>Create Seat Layout</h1>
+  <div style="display: flex">
+    <div style="flex: 2">
+      <form [formGroup]="seatLayoutForm" (ngSubmit)="onSubmit()">
+        <div style="text-align: right; margin-bottom: 20px">
+          <button
+            type="button"
+            (click)="addSection()"
+            mat-fab
+            color="accent"
+            matTooltip="Add Section"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
 
-<form [formGroup]="seatLayoutForm" (ngSubmit)="onSubmit()">
-  <div style="text-align: right; margin-bottom: 20px">
-    <button
-      type="button"
-      (click)="addSection()"
-      mat-fab
-      color="accent"
-      matTooltip="Add Section"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-  </div>
-
-  <div formArrayName="sections">
-    <div *ngFor="let section of sections.controls; let i = index">
-      <div [formGroupName]="i">
-        <app-section-form
-          [sectionGroup]="sectionGroup(i)"
-          [idx]="i"
-          (removeEvent)="removeSection($event)"
-        ></app-section-form>
-      </div>
-      <hr />
+        <div formArrayName="sections">
+          <div *ngFor="let section of sections.controls; let i = index">
+            <div [formGroupName]="i" style="margin-bottom: 20px">
+              <app-section-form
+                [sectionGroup]="sectionGroup(i)"
+                [idx]="i"
+                (removeEvent)="removeSection($event)"
+              ></app-section-form>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: center">
+          <button type="submit" mat-raised-button color="primary">
+            Create Layout
+          </button>
+        </div>
+      </form>
+      <pre>{{ this.seatLayoutForm.value | json }}</pre>
+    </div>
+    <div style="flex: 1">
+      <app-flight-seats
+        *ngIf="seatLayout !== null"
+        [seatLayout]="seatLayout"
+      ></app-flight-seats>
+      <pre>
+        {{ seatLayout | json }}
+      </pre>
     </div>
   </div>
-</form>
-<pre>{{ this.seatLayoutForm.value | json }}</pre>
+</div>
