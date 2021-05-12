@@ -1,16 +1,48 @@
-<div class="get-started">
-  <a mat-raised-button color="primary" href="create-seat-layout">New</a>
-  <br />
-  <ng-container *ngFor="let seatLayout of seatLayouts">
-    <b>#{{ seatLayout.id }}</b>
-    <button
-      mat-raised-button
-      color="warn"
-      (click)="deleteSeatLayout(seatLayout.id)"
-    >
-      Delete
-    </button>
-    <app-flight-seats [seatLayout]="seatLayout"></app-flight-seats>
-    <hr />
-  </ng-container>
+<div class="wide-wrapper">
+  <h1>Seat Layouts</h1>
+  <!--  <a mat-raised-button color="primary" href="create-seat-layout">New</a>-->
+  <!--  <br />-->
+  <!--  <ng-container *ngFor="let seatLayout of seatLayouts">-->
+  <!--    <b>#{{ seatLayout.id }}</b>-->
+  <!--    <button-->
+  <!--      mat-raised-button-->
+  <!--      color="warn"-->
+  <!--      (click)="deleteSeatLayout(seatLayout.id)"-->
+  <!--    >-->
+  <!--      Delete-->
+  <!--    </button>-->
+  <!--    <app-flight-seats [seatLayout]="seatLayout"></app-flight-seats>-->
+  <!--    <hr />-->
+  <!--  </ng-container>-->
+  <div style="display: flex">
+    <div style="flex: 1">
+      <mat-card>
+        <a mat-raised-button color="primary" href="create-seat-layout">New</a>
+        <hr />
+        <mat-selection-list #layouts [multiple]="false">
+          <mat-list-option
+            *ngFor="let seatLayout of seatLayouts; let i = index"
+            [value]="seatLayout.id"
+            [selected]="i === 0"
+          >
+            # {{ seatLayout.id }}
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-card>
+    </div>
+    <div style="flex: 2">
+      <mat-card
+        *ngIf="getSeatLayout(layouts.selectedOptions.selected[0]?.value) as sL"
+      >
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="deleteSeatLayout(sL.id)"
+        >
+          Delete
+        </button>
+        <app-flight-seats [seatLayout]="sL"></app-flight-seats>
+      </mat-card>
+    </div>
+  </div>
 </div>

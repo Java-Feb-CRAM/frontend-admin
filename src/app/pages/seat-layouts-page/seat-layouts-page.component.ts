@@ -22,4 +22,8 @@ export class SeatLayoutsPageComponent implements OnInit {
       this.seatLayouts = this.seatLayouts.filter((layout) => layout.id !== id);
     });
   }
+
+  getSeatLayout(id: number): SeatLayout | undefined {
+    return this.seatLayouts.find((layout) => layout.id === id);
+  }
 }

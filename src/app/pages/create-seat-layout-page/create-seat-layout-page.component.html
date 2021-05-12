@@ -3,18 +3,6 @@
   <div style="display: flex">
     <div style="flex: 2">
       <form [formGroup]="seatLayoutForm" (ngSubmit)="onSubmit()">
-        <div style="text-align: right; margin-bottom: 20px">
-          <button
-            type="button"
-            (click)="addSection()"
-            mat-fab
-            color="accent"
-            matTooltip="Add Section"
-          >
-            <mat-icon>add</mat-icon>
-          </button>
-        </div>
-
         <div formArrayName="sections">
           <div *ngFor="let section of sections.controls; let i = index">
             <div [formGroupName]="i" style="margin-bottom: 20px">
@@ -26,22 +14,29 @@
             </div>
           </div>
         </div>
-        <div style="text-align: center">
+        <div style="text-align: right; margin-bottom: 20px">
+          <button
+            type="button"
+            (click)="addSection()"
+            mat-fab
+            color="accent"
+            matTooltip="Add Section"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        <div style="text-align: center; margin-bottom: 20px">
           <button type="submit" mat-raised-button color="primary">
             Create Layout
           </button>
         </div>
       </form>
-      <pre>{{ this.seatLayoutForm.value | json }}</pre>
     </div>
     <div style="flex: 1">
       <app-flight-seats
         *ngIf="seatLayout !== null"
         [seatLayout]="seatLayout"
       ></app-flight-seats>
-      <pre>
-        {{ seatLayout | json }}
-      </pre>
     </div>
   </div>
 </div>
