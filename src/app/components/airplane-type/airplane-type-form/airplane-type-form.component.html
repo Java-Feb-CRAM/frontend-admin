@@ -5,26 +5,25 @@
 <form [formGroup]="airplaneTypeForm" (ngSubmit)="onSubmit()">
   <div mat-dialog-content>
     <mat-form-field>
-      <mat-label>Max Capacity</mat-label>
-      <input
-        matInput
-        type="number"
-        formControlName="maxCapacity"
-        required
-        min="0"
-      />
+      <mat-label>Seat Layout</mat-label>
+      <mat-select formControlName="seatLayout" required>
+        <mat-option value="-1">Select a Seat Layout</mat-option>
+        <mat-option *ngFor="let layout of seatLayouts" [value]="layout.id">
+          {{ layout.id }}
+        </mat-option>
+      </mat-select>
       <mat-error
-        *ngIf="airplaneTypeForm.controls['maxCapacity'].errors?.required"
+        *ngIf="airplaneTypeForm.controls['seatLayout'].errors?.required"
       >
-        Max capacity is required
+        Seat Layout is required
       </mat-error>
-      <mat-error *ngIf="airplaneTypeForm.controls['maxCapacity'].errors?.min">
-        Max capacity must be 0 or greater
+      <mat-error *ngIf="airplaneTypeForm.controls['seatLayout'].errors?.min">
+        Seat Layout is required
       </mat-error>
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button mat-button (click)="onCancel()">Cancel</button>
+    <button type="button" mat-button (click)="onCancel()">Cancel</button>
     <span fxFlex></span>
     <button
       mat-raised-button

@@ -23,6 +23,7 @@ export class AirplaneTypeService {
             return new AirplaneType(
               airplaneType.id,
               airplaneType.maxCapacity,
+              airplaneType.seatLayout,
               airplaneType.airplanes
             );
           }),
@@ -34,11 +35,19 @@ export class AirplaneTypeService {
   }
 
   createAirplaneType(airplaneType: AirplaneType): Observable<AirplaneType> {
+    console.log(airplaneType);
     return this.http
-      .post<AirplaneType>(this.airplaneTypesUrl, airplaneType)
+      .post<AirplaneType>(this.airplaneTypesUrl, {
+        seatLayoutId: airplaneType.seatLayout.id,
+      })
       .pipe(
         map((data: AirplaneType) => {
-          return new AirplaneType(data.id, data.maxCapacity, []);
+          return new AirplaneType(
+            data.id,
+            data.maxCapacity,
+            data.seatLayout,
+            []
+          );
         })
       );
   }

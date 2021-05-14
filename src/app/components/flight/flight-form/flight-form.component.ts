@@ -8,6 +8,7 @@ import { Route } from '../../../models/Route';
 import { Flight } from '../../../models/Flight';
 import { Airport } from '../../../models/Airport';
 import { AirplaneType } from '../../../models/AirplaneType';
+import { SeatLayout } from '../../../models/SeatLayout';
 
 export interface FlightFormData {
   flight?: Flight;
@@ -101,7 +102,7 @@ export class FlightFormComponent implements OnInit {
         ),
         new Airplane(
           this.flightForm.controls.airplane.value,
-          new AirplaneType(0, 0, []),
+          new AirplaneType(0, 0, new SeatLayout(0, []), []),
           []
         ),
         date,

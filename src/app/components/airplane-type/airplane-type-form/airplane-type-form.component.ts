@@ -1,7 +1,9 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AirplaneType } from '../../../models/AirplaneType';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { SeatLayoutService } from '../../../services/seat-layout.service';
+import { SeatLayout } from '../../../models/SeatLayout';
 
 export interface AirplaneTypeFormData {
   airplaneType?: AirplaneType;
@@ -12,33 +14,51 @@ export interface AirplaneTypeFormData {
   templateUrl: './airplane-type-form.component.html',
   styleUrls: ['./airplane-type-form.component.scss'],
 })
-export class AirplaneTypeFormComponent {
+export class AirplaneTypeFormComponent implements OnInit {
   airplaneTypeForm = this.fb.group({
-    maxCapacity: [0, [Validators.required, Validators.min(0)]],
+    seatLayout: [-1, [Validators.required, Validators.min(0)]],
   });
   updating = false;
+  seatLayouts: SeatLayout[] = [];
   constructor(
     private readonly fb: FormBuilder,
     public dialogRef: MatDialogRef<AirplaneTypeFormData>,
-    @Inject(MAT_DIALOG_DATA) public data: AirplaneTypeFormData
+    @Inject(MAT_DIALOG_DATA) public data: AirplaneTypeFormData,
+    private readonly seatLayoutService: SeatLayoutService
   ) {
     if (data && data.airplaneType) {
       this.airplaneTypeForm.patchValue({
-        maxCapacity: data.airplaneType.maxCapacity,
+        seatLayout: data.airplaneType.seatLayout.id,
       });
       this.updating = true;
     }
   }
 
+  ngOnInit(): void {
+    this.seatLayoutService.getAllSeatLayouts().subscribe((data) => {
+      this.seatLayouts = data;
+    });
+  }
+
   onSubmit(): void {
+    console.log(this.airplaneTypeForm);
     let airplaneType: AirplaneType;
     if (this.updating && this.data.airplaneType) {
       airplaneType = this.data.airplaneType;
-      airplaneType.maxCapacity = this.airplaneTypeForm.controls.maxCapacity.value;
+      airplaneType.maxCapacity = 0;
+      airplaneType.seatLayout =
+        this.seatLayouts.find(
+          (l) => l.id === this.airplaneTypeForm.controls.seatLayout.value
+        ) ||
+        new SeatLayout(this.airplaneTypeForm.controls.seatLayout.value, []);
     } else {
       airplaneType = new AirplaneType(
         0,
-        this.airplaneTypeForm.controls.maxCapacity.value,
+        0,
+        this.seatLayouts.find(
+          (l) => l.id === this.airplaneTypeForm.controls.seatLayout.value
+        ) ||
+          new SeatLayout(this.airplaneTypeForm.controls.seatLayout.value, []),
         []
       );
     }

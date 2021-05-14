@@ -30,7 +30,7 @@ export class AirplaneTypeTableComponent implements OnChanges, AfterViewInit {
   dataSource = new MatTableDataSource<AirplaneType>(this.airplaneTypes);
   @Output() airplaneTypeTableEvent = new EventEmitter<AirplaneTypeTableEvent>();
   @Output() addEvent = new EventEmitter<boolean>();
-  displayedColumns = ['id', 'maxCapacity', 'actions'];
+  displayedColumns = ['id', 'maxCapacity', 'seatLayout', 'actions'];
   filterString = '';
   @ViewChild(MatPaginator, { static: false })
   set paginator(value: MatPaginator) {
@@ -57,6 +57,8 @@ export class AirplaneTypeTableComponent implements OnChanges, AfterViewInit {
           return item.id;
         case 'maxCapacity':
           return item.maxCapacity;
+        case 'seatLayout':
+          return item.seatLayout.id;
         default:
           // @ts-ignore
           return item[property];
@@ -67,6 +69,9 @@ export class AirplaneTypeTableComponent implements OnChanges, AfterViewInit {
         return true;
       }
       if (filter.includes(data.maxCapacity.toString())) {
+        return true;
+      }
+      if (filter.includes(data.seatLayout.id.toString())) {
         return true;
       }
       return false;

@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AirplaneType } from '../../../models/AirplaneType';
 import { AirplaneTypeService } from '../../../services/airplane-type.service';
+import { SeatLayout } from '../../../models/SeatLayout';
 
 export interface AirplaneFormData {
   airplane?: Airplane;
@@ -48,7 +49,12 @@ export class AirplaneFormComponent implements OnInit {
     } else {
       airplane = new Airplane(
         0,
-        new AirplaneType(this.airplaneForm.controls.airplaneType.value, 0, []),
+        new AirplaneType(
+          this.airplaneForm.controls.airplaneType.value,
+          0,
+          new SeatLayout(0, []),
+          []
+        ),
         []
       );
     }
