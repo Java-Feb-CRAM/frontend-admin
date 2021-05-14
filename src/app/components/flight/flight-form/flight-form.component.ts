@@ -107,6 +107,8 @@ export class FlightFormComponent implements OnInit {
         ),
         date,
         this.flightForm.controls.reservedSeats.value,
+        0,
+        0,
         this.flightForm.controls.seatPrice.value,
         []
       );

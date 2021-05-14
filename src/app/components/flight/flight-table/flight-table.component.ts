@@ -35,7 +35,9 @@ export class FlightTableComponent implements OnChanges, AfterViewInit {
     'route',
     'airplane',
     'departureTime',
-    'reservedSeats',
+    'totalSeats',
+    'availableSeats',
+    'percentFull',
     'seatPrice',
     'actions',
   ];
@@ -74,6 +76,12 @@ export class FlightTableComponent implements OnChanges, AfterViewInit {
           return item.departureTime;
         case 'reservedSeats':
           return item.reservedSeats;
+        case 'totalSeats':
+          return item.totalSeats;
+        case 'availableSeats':
+          return item.availableSeats;
+        case 'percentFull':
+          return 1 - item.availableSeats / item.totalSeats || 0;
         case 'seatPrice':
           return item.seatPrice;
         default:

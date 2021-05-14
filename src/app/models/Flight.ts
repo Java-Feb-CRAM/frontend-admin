@@ -7,6 +7,8 @@ export class Flight {
   public airplane: Airplane;
   public departureTime: Date;
   public reservedSeats: number;
+  public totalSeats: number;
+  public availableSeats: number;
   public seatPrice: number;
   public bookings: any[];
 
@@ -16,6 +18,8 @@ export class Flight {
     airplane: Airplane,
     departureTime: Date,
     reservedSeats: number,
+    totalSeats: number,
+    availableSeats: number,
     seatPrice: number,
     bookings: any[]
   ) {
@@ -24,6 +28,8 @@ export class Flight {
     this.airplane = airplane;
     this.departureTime = new Date(departureTime);
     this.reservedSeats = reservedSeats;
+    this.totalSeats = totalSeats;
+    this.availableSeats = availableSeats;
     this.seatPrice = seatPrice;
     this.bookings = bookings;
   }

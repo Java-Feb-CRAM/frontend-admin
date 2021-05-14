@@ -26,6 +26,8 @@ export class FlightService {
               flight.airplane,
               flight.departureTime,
               flight.reservedSeats,
+              flight.totalSeats,
+              flight.availableSeats,
               flight.seatPrice,
               []
             );
@@ -53,6 +55,8 @@ export class FlightService {
           data.airplane,
           data.departureTime,
           data.reservedSeats,
+          data.totalSeats,
+          data.availableSeats,
           data.seatPrice,
           data.bookings
         );
